@@ -25,6 +25,7 @@ public class Member extends BaseEntity{
 
     private String email;
 
+    @Setter
     private String password;
 
     private String profileImage;
@@ -43,7 +44,8 @@ public class Member extends BaseEntity{
 
     private boolean perAgree;
 
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    //private LocalDate createdAt;
+    //private LocalDate updatedAt;
+
 
 }
