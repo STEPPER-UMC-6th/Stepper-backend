@@ -1,7 +1,10 @@
 package com.example.stepperbackend.web.controller;
 
+import com.example.stepperbackend.apiPayload.ApiResponse;
+import com.example.stepperbackend.apiPayload.code.status.SuccessStatus;
 import com.example.stepperbackend.service.MemberService.MemberService;
 import com.example.stepperbackend.web.dto.MemberDto;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +16,19 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+//    @Operation(summary = "회원가입 API",description = "사용자 회원가입")
+//    @PostMapping("/signup")
+//    public ResponseEntity<MemberDto.MemberResponseDto> signup(@RequestBody MemberDto.MemberSignupRequestDto dto) {
+//        MemberDto.MemberResponseDto response = memberService.signup(dto);
+//        return ResponseEntity.ok(response);
+//        //return ResponseEntity.ok(ApiResponse.onSuccess(response));
+//    }
+
+    @Operation(summary = "회원가입 API",description = "사용자 회원가입")
     @PostMapping("/signup")
-    public ResponseEntity<MemberDto.MemberResponseDto> signup(@RequestBody MemberDto.MemberSignupRequestDto dto) {
+    public ResponseEntity<ApiResponse<MemberDto.MemberResponseDto>> signup(@RequestBody MemberDto.MemberSignupRequestDto dto) {
         MemberDto.MemberResponseDto response = memberService.signup(dto);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.onSuccess(response));
     }
 
 //    @PostMapping("/login")
