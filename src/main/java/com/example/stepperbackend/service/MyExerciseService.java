@@ -14,6 +14,9 @@ public class MyExerciseService {
     public MyExercise addMyExercise(MyExerciseRequestDTO.AddExerciseDto request) {
         MyExercise myExercise = MyExercise.builder()
                 .url(request.getUrl())
+                .channel_name(request.getChannel_name())
+                .video_image(request.getVideo_image())
+                .video_title(request.getVideo_title())
                 .body_part(request.getBodyPart())
                 .build();
 

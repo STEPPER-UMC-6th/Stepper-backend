@@ -3,6 +3,7 @@ package com.example.stepperbackend.domain;
 
 import com.example.stepperbackend.domain.enums.BodyPart;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -19,8 +20,19 @@ public class MyExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long exercise_id;
 
+    @NotNull
     private String url;
 
     @Enumerated
     private BodyPart body_part;
+
+    @NotNull
+    private String video_title;
+
+    @NotNull
+    private String video_image;
+    
+    @NotNull
+    private String channel_name;
+
 }
