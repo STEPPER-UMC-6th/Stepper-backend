@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.*;
+
 @Entity
 @Getter
 @Builder
@@ -46,5 +48,7 @@ public class Member extends BaseEntity {
     //private LocalDate createdAt;
     //private LocalDate updatedAt;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MoreExercise> moreExerciseList = new ArrayList<>();
 
 }
