@@ -1,10 +1,9 @@
 package com.example.stepperbackend.domain;
 
+import com.example.stepperbackend.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
