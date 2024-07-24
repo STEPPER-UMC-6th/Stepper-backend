@@ -1,20 +1,18 @@
-package com.example.stepperbackend.web.dto;
+package com.example.stepperbackend.web.dto.MyExercise;
 
 import com.example.stepperbackend.domain.enums.BodyPart;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 public class MyExerciseRequestDTO {
     @Getter
-    public static class AddExerciseDto{
+    public static class AddExerciseDto {
 
         @NotNull
         String url;
         @NotNull
-        BodyPart bodyPart;
+        BodyPart body_part;
 
         @NotNull
         String video_title;
@@ -24,5 +22,12 @@ public class MyExerciseRequestDTO {
 
         @NotNull
         String channel_name;
+    }
+
+    @Getter
+    public static class CheckExerciseDto{
+
+        @NotNull
+        BodyPart body_part;
     }
 }
