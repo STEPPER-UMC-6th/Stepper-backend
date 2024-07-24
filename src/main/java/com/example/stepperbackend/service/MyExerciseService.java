@@ -3,10 +3,8 @@ package com.example.stepperbackend.service;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.repository.MyExerciseRepository;
 import com.example.stepperbackend.web.dto.MyExercise.MyExerciseRequestDTO;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
@@ -14,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyExerciseService {
     private final MyExerciseRepository myExerciseRepository;
-    @PersistenceContext
 
     public MyExercise addMyExercise(MyExerciseRequestDTO.AddExerciseDto request) {
         MyExercise myExercise = MyExercise.builder()
@@ -28,8 +25,11 @@ public class MyExerciseService {
         return myExerciseRepository.save(myExercise);
     }
 
-    public MyExercise checkMyExercise(MyExerciseRequestDTO.CheckExerciseDto request) {
+    public List<MyExercise> checkMyExercise(MyExerciseRequestDTO.CheckExerciseDto request) {
+        List<MyExercise> exercises = myExerciseRepository.findAll();
 
-
+        return exercises.stream()
+                .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part()))
+                .toList();
     }
 }

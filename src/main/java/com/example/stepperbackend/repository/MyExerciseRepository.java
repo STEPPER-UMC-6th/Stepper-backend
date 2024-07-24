@@ -1,14 +1,12 @@
 package com.example.stepperbackend.repository;
 
 import com.example.stepperbackend.domain.MyExercise;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
-
+@Repository
 public interface MyExerciseRepository extends JpaRepository<MyExercise, Long> {
 
-    Page<MyExercise> findByMember();
 }
 

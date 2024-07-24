@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -22,15 +24,14 @@ public class MyExerciseRestController {
     private final MyExerciseService myExerciseService;
 
         @PostMapping("/AddExercise")
-        public ApiResponse<MyExerciseResponseDTO.AddExerciseDTO> join(@RequestBody @Valid MyExerciseRequestDTO.AddExerciseDto request){
+        public ApiResponse<MyExerciseResponseDTO.AddExerciseDTO> Add(@RequestBody @Valid MyExerciseRequestDTO.AddExerciseDto request){
             MyExercise myExercise = myExerciseService.addMyExercise(request);
             return ApiResponse.onSuccess(MyExerciseConverter.toAddExerciseDTO(myExercise));
         }
 
-        @PostMapping("/CheckExercise")
-        public ApiResponse<MyExerciseResponseDTO.CheckExerciseDTO> check(@RequestBody @Valid MyExerciseRequestDTO.CheckExerciseDto request){
-            MyExercise myExercise = myExerciseService.checkMyExercise(request);
-            return ApiResponse.onSuccess(MyExerciseConverter.tocheckExerciseDTO(myExercise));
+        @PostMapping("/checkExercise")
+        public ApiResponse<List<MyExerciseResponseDTO.CheckExerciseDTO>> check(@RequestBody @Valid MyExerciseRequestDTO.CheckExerciseDto request){
+            List<MyExercise> myExercise = myExerciseService.checkMyExercise(request);
+            return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise));
         }
     }
-

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class MyExerciseResponseDTO {
     @Builder
     @Getter
@@ -24,7 +26,6 @@ public class MyExerciseResponseDTO {
         String video_title;
         String video_image;
         String channel_name;
-        String status;
-        String message;
+
     }
 }

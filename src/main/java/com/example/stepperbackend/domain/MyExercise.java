@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -31,8 +33,9 @@ public class MyExercise {
 
     @NotNull
     private String video_image;
-    
+
     @NotNull
     private String channel_name;
 
 }
+
