@@ -18,11 +18,11 @@ public enum SuccessStatus implements BaseCode {
 
     @Override
     public ReasonDTO getReason() {
-        return null;
+        return new ReasonDTO(httpStatus, code, message);
     }
 
     @Override
     public ReasonDTO getReasonHttpStatus() {
-        return null;
+        return new ReasonDTO(httpStatus, code, message);
     }
 }
