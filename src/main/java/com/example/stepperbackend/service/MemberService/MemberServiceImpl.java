@@ -5,12 +5,10 @@ import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.web.converter.MemberConverter;
 import com.example.stepperbackend.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +25,23 @@ public class MemberServiceImpl implements MemberService {
         MemberDto.MemberResponseDto response = MemberConverter.toDto(member);
         response.setPassword(null); // 비밀번호 제거
         return response;
+    }
+
+    @Override
+    public MemberDto.MemberResponseDto login(MemberDto.MemberLoginRequestDto dto) {
+        Optional<Member> memberOptional = memberRepository.findByEmail(dto.getEmail());
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            if (bCryptPasswordEncoder.matches(dto.getPassword(), member.getPassword())) {
+                MemberDto.MemberResponseDto response = MemberConverter.toDto(member);
+                response.setPassword(null); // 비밀번호 제거
+                return response;
+            } else {
+                throw new IllegalArgumentException("Invalid password");
+            }
+        } else {
+            throw new IllegalArgumentException("User not found");
+        }
     }
 
 }

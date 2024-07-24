@@ -24,11 +24,14 @@ public class MemberController {
         return ApiResponse.onSuccess(response);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<MemberDto.MemberResponseDto> login(@RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        MemberDto.MemberResponseDto response = memberService.login(dto);
-//        return ResponseEntity.ok(response);
-//    }
+    @Operation(summary = "로그인 API", description = "사용자 로그인")
+    @PostMapping("/login")
+    public ApiResponse<MemberDto.MemberResponseDto> login(@RequestBody MemberDto.MemberLoginRequestDto dto) {
+        MemberDto.MemberResponseDto response = memberService.login(dto);
+        return ApiResponse.onSuccess(response);
+    }
+
+
 //
 //    @GetMapping("/{memberId}")
 //    public ResponseEntity<MemberDto.MemberResponseDto> getUserInfo(@PathVariable Long memberId) {
