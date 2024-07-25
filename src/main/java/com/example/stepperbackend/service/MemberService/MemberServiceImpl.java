@@ -2,7 +2,7 @@ package com.example.stepperbackend.service.MemberService;
 
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.repository.MemberRepository;
-import com.example.stepperbackend.web.converter.MemberConverter;
+import com.example.stepperbackend.converter.MemberConverter;
 import com.example.stepperbackend.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

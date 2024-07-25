@@ -1,4 +1,4 @@
-package com.example.stepperbackend.web.converter;
+package com.example.stepperbackend.converter;
 
 
 import com.example.stepperbackend.domain.Member;
