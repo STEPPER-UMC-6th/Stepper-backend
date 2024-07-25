@@ -4,12 +4,14 @@ import com.example.stepperbackend.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MoreExercise extends BaseEntity {
+public class MoreExercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +27,7 @@ public class MoreExercise extends BaseEntity {
     private int minutes;
 
     private int seconds;
+
+    private LocalDate date;
 
 }
