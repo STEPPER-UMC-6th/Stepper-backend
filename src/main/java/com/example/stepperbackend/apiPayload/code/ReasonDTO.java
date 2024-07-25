@@ -13,8 +13,6 @@ public class ReasonDTO {
     private final String code;
     private final String message;
 
-    //public boolean getIsSuccess(){return isSuccess;}
-
     public ReasonDTO(HttpStatus httpStatus, String code, String message) {
         this.httpStatus = httpStatus;
         this.code = code;
