@@ -7,10 +7,9 @@ import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MoreExercise;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MoreExerciseRepository;
-import com.example.stepperbackend.web.converter.MoreExerciseConverter;
+import com.example.stepperbackend.converter.MoreExerciseConverter;
 import com.example.stepperbackend.web.dto.MoreExerciseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
