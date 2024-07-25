@@ -5,9 +5,9 @@ import com.example.stepperbackend.apiPayload.code.status.SuccessStatus;
 import com.example.stepperbackend.service.MemberService.MemberService;
 import com.example.stepperbackend.web.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,11 +24,25 @@ public class MemberController {
         return ApiResponse.onSuccess(response);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<MemberDto.MemberResponseDto> login(@RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        MemberDto.MemberResponseDto response = memberService.login(dto);
-//        return ResponseEntity.ok(response);
-//    }
+    @Operation(summary = "로그인 API", description = "사용자 로그인")
+    @PostMapping("/login")
+    public ApiResponse<MemberDto.MemberResponseDto> login(HttpServletRequest request, @RequestBody MemberDto.MemberLoginRequestDto dto) {
+        MemberDto.MemberResponseDto response = memberService.login(dto);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", response);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "로그아웃 API", description = "사용자 로그아웃")
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return ApiResponse.onSuccess(null);
+    }
+
 //
 //    @GetMapping("/{memberId}")
 //    public ResponseEntity<MemberDto.MemberResponseDto> getUserInfo(@PathVariable Long memberId) {
