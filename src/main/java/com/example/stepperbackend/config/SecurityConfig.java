@@ -23,15 +23,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        //csrf disable
         http
                 .csrf((auth) -> auth.disable());
 
+        //From 로그인 방식 disable
         http
                 .formLogin((auth) -> auth.disable());
 
+        //http basic 인증 방식 disable
         http
                 .httpBasic((auth) -> auth.disable());
 
+        //경로별 인가
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/login", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
@@ -40,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated());
 
+        //세션 설정
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

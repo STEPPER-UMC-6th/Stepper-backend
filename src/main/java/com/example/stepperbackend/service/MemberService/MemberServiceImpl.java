@@ -1,5 +1,7 @@
 package com.example.stepperbackend.service.MemberService;
 
+import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.converter.MemberConverter;
@@ -19,6 +21,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto.MemberResponseDto signup(MemberDto.MemberSignupRequestDto dto) {
+
+        // 이메일 중복 체크
+        if (memberRepository.existsByEmail(dto.getEmail())) {
+            throw new MemberHandler(ErrorStatus.EMAIL_ALREADY_EXISTS);
+        }
+
         Member member = MemberConverter.toEntity(dto);
         member.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         member = memberRepository.save(member);
