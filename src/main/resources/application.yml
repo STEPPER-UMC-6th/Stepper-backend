@@ -1,4 +1,6 @@
 spring:
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
   datasource:
     url: jdbc:mysql://localhost:3306/stepper
     username: root
