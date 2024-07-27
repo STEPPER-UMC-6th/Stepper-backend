@@ -3,7 +3,6 @@ package com.example.stepperbackend.web.converter;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.web.dto.MyExercise.MyExerciseResponseDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

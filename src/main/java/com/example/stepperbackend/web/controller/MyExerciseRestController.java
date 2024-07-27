@@ -32,6 +32,7 @@ public class MyExerciseRestController {
         @PostMapping("/checkExercise")
         public ApiResponse<List<MyExerciseResponseDTO.CheckExerciseDTO>> check(@RequestBody @Valid MyExerciseRequestDTO.CheckExerciseDto request){
             List<MyExercise> myExercise = myExerciseService.checkMyExercise(request);
+            System.out.println(ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise)));
             return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise));
         }
     }
