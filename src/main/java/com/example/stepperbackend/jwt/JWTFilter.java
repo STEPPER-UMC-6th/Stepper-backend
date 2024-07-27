@@ -40,16 +40,6 @@ public class JWTFilter extends OncePerRequestFilter {
         //Bearer 부분 제거 후 순수 토큰만 획득
         String token = authorization.split(" ")[1];
 
-        //토큰 소멸 시간 검증
-//        if (jwtUtil.isExpired(token)) {
-//
-//            System.out.println("token expired");
-//            filterChain.doFilter(request, response);
-//
-//            //조건이 해당되면 메소드 종료 (필수)
-//            return;
-//        }
-
         try {
             if (jwtUtil.isExpired(token)) {
                 log.info("토큰 만료됨");
@@ -64,15 +54,12 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
 
-        //토큰에서 email과 role 획득
         String email = jwtUtil.getUsername(token);
-        //String role = jwtUtil.getRole(token);
 
         //Member 를 생성하여 값 set
         Member member = Member.builder()
                 .email(email)
-                .password("temppassword") // 임시 비밀번호
-                //.role(role)
+                .password("temppassword")
                 .build();
 
         //MemberDetails에 회원 정보 객체 담기

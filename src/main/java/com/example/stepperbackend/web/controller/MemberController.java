@@ -1,18 +1,15 @@
 package com.example.stepperbackend.web.controller;
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
-import com.example.stepperbackend.apiPayload.code.status.SuccessStatus;
 import com.example.stepperbackend.jwt.JWTUtil;
 import com.example.stepperbackend.service.MemberService.MemberService;
 import com.example.stepperbackend.web.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,89 +40,6 @@ public class MemberController {
         return ApiResponse.onSuccess(response);
     }
 
-//    @Operation(summary = "로그인 API", description = "사용자 로그인")
-//    @PostMapping("/login")
-//    public ApiResponse<MemberDto.MemberResponseDto> login(HttpServletRequest request, @RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        MemberDto.MemberResponseDto response = memberService.login(dto);
-//        HttpSession session = request.getSession(true);
-//        session.setAttribute("user", response);
-//        return ApiResponse.onSuccess(response);
-//    }
-
-//    @Operation(summary = "로그인 API", description = "사용자 로그인")
-//    @PostMapping("/login")
-//    public ApiResponse<String> login(@RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        // 사용자 인증
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        // JWT 토큰 생성
-//        String jwt = jwtUtil.createJwt(dto.getEmail(), "ROLE_USER", 86400000L); // 1 day in milliseconds
-//
-//        // JWT 토큰 반환
-//        return ApiResponse.onSuccess(jwt);
-//    }
-
-//    @Operation(summary = "로그인 API", description = "사용자 로그인")
-//    @PostMapping("/login")
-//    public ApiResponse<String> login(@RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        log.info("Login request received for email: {}", dto.getEmail());
-//        try {
-//            // 사용자 인증
-//            Authentication authentication = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            log.info("Authentication successful for email: {}", dto.getEmail());
-//
-//            // JWT 토큰 생성
-//            String jwt = jwtUtil.createJwt(dto.getEmail(), "ROLE_USER", 86400000L); // 1 day in milliseconds
-//            log.info("JWT token generated for email: {}", dto.getEmail());
-//
-//            // JWT 토큰 반환
-//            log.info("Login successful for email: {}", dto.getEmail());
-//            return ApiResponse.onSuccess(jwt);
-//        } catch (Exception e) {
-//            log.error("Login failed for email: {}", dto.getEmail(), e);
-//            throw e;
-//        }
-//    }
-
-//    @Operation(summary = "로그인 API", description = "사용자 로그인")
-//    @PostMapping("/login")
-//    public ApiResponse<MemberDto.MemberResponseDto> login(@Valid @RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        try {
-//            UsernamePasswordAuthenticationToken authenticationToken =
-//                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
-//
-//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            String jwt = jwtUtil.createJwt(authentication.getName(), 60 * 60 * 10L);
-//            MemberDto.MemberResponseDto response = new MemberDto.MemberResponseDto();
-//            response.setToken(jwt); // 토큰을 응답 DTO에 설정
-//            return ApiResponse.onSuccess(response);
-//        } catch (Exception e) {
-//            return ApiResponse.onFailure("AUTH_ERROR", "Authentication failed", null);
-//        }
-//    }
-
-//    @Operation(summary = "로그인 API", description = "사용자 로그인")
-//    @PostMapping("/login")
-//    public ApiResponse<String> login(@Valid @RequestBody MemberDto.MemberLoginRequestDto dto) {
-//        try {
-//            UsernamePasswordAuthenticationToken authenticationToken =
-//                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
-//
-//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            String jwt = jwtUtil.createJwt(authentication.getName(), 60 * 60 * 10L); // authority 부분 제거
-//            return ApiResponse.onSuccess(jwt); // 토큰을 응답으로 반환
-//        } catch (Exception e) {
-//            return ApiResponse.onFailure("AUTH_ERROR", "Authentication failed", null);
-//        }
-//    }
 
     @Operation(summary = "로그인 API", description = "사용자 로그인")
     @PostMapping("/login")
@@ -154,15 +68,6 @@ public class MemberController {
         }
     }
 
-//    @Operation(summary = "로그아웃 API", description = "사용자 로그아웃")
-//    @PostMapping("/logout")
-//    public ApiResponse<Void> logout(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
-//        return ApiResponse.onSuccess(null);
-//    }
     @Operation(summary = "로그아웃 API", description = "사용자 로그아웃")
     @PostMapping("/logout")
     public ApiResponse<Void> logout(HttpServletRequest request, HttpServletResponse response) {

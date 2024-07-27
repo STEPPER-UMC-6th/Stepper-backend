@@ -45,7 +45,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         return authenticationManager.authenticate(authToken);
     }
 
-    //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
+    //로그인 성공시 실행하는 메소드 (JWT 발급)
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
 

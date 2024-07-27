@@ -8,5 +8,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MemberService {
     MemberDto.MemberResponseDto signup(MemberDto.MemberSignupRequestDto dto);
 
-    //MemberDto.MemberResponseDto login(MemberDto.MemberLoginRequestDto dto);
 }

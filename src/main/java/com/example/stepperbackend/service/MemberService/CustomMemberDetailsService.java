@@ -24,7 +24,7 @@ public class CustomMemberDetailsService implements UserDetailsService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        // UserDetails에 담아서 return하면 AuthenticationManager가 검증함
+        // UserDetails에 담아서 return 해서 AuthenticationManager가 검증
         return new CustomMemberDetails(member);
     }
 }

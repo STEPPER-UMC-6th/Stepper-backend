@@ -24,7 +24,6 @@ public class CustomMemberDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList(); // 권한을 빈 리스트로 설정
-        //return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
