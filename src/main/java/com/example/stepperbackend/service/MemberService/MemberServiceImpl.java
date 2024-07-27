@@ -1,16 +1,16 @@
 package com.example.stepperbackend.service.MemberService;
 
+import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.repository.MemberRepository;
-import com.example.stepperbackend.web.converter.MemberConverter;
+import com.example.stepperbackend.converter.MemberConverter;
 import com.example.stepperbackend.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +21,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto.MemberResponseDto signup(MemberDto.MemberSignupRequestDto dto) {
+
+        // 이메일 중복 체크
+        if (memberRepository.existsByEmail(dto.getEmail())) {
+            throw new MemberHandler(ErrorStatus.EMAIL_ALREADY_EXISTS);
+        }
+
         Member member = MemberConverter.toEntity(dto);
         member.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         member = memberRepository.save(member);
@@ -28,5 +34,13 @@ public class MemberServiceImpl implements MemberService {
         response.setPassword(null); // 비밀번호 제거
         return response;
     }
-
+    @Override
+    public void deleteMember(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()) {
+            memberRepository.delete(member.get());
+        } else {
+            throw new RuntimeException("Member not found");
+        }
+    }
 }

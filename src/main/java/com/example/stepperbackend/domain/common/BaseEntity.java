@@ -1,4 +1,4 @@
-package com.example.stepperbackend.domain;
+package com.example.stepperbackend.domain.common;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
