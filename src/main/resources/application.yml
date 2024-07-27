@@ -1,8 +1,10 @@
 spring:
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
   datasource:
     url: jdbc:mysql://localhost:3306/stepper
     username: root
-    password: 1234
+    password: walesmin
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
