@@ -7,6 +7,7 @@ import com.example.stepperbackend.service.MemberService.MemberService;
 import com.example.stepperbackend.web.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -153,13 +154,20 @@ public class MemberController {
         }
     }
 
+//    @Operation(summary = "로그아웃 API", description = "사용자 로그아웃")
+//    @PostMapping("/logout")
+//    public ApiResponse<Void> logout(HttpServletRequest request) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//        return ApiResponse.onSuccess(null);
+//    }
     @Operation(summary = "로그아웃 API", description = "사용자 로그아웃")
     @PostMapping("/logout")
-    public ApiResponse<Void> logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+    public ApiResponse<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextHolder.clearContext();
+        response.setStatus(HttpServletResponse.SC_OK);
         return ApiResponse.onSuccess(null);
     }
 
