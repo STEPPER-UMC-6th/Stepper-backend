@@ -34,5 +34,13 @@ public class MemberServiceImpl implements MemberService {
         response.setPassword(null); // 비밀번호 제거
         return response;
     }
-
+    @Override
+    public void deleteMember(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()) {
+            memberRepository.delete(member.get());
+        } else {
+            throw new RuntimeException("Member not found");
+        }
+    }
 }

@@ -8,4 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MemberService {
     MemberDto.MemberResponseDto signup(MemberDto.MemberSignupRequestDto dto);
 
+    void deleteMember(String email);
 }

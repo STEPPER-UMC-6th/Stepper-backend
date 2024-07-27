@@ -76,6 +76,21 @@ public class MemberController {
         return ApiResponse.onSuccess(null);
     }
 
+    @DeleteMapping("/delete")
+    public ApiResponse<Void> deleteMember(HttpServletRequest request) {
+        try {
+            String token = request.getHeader("Authorization").substring(7);
+            String email = jwtUtil.getUsername(token);
+
+            memberService.deleteMember(email);
+            SecurityContextHolder.clearContext();
+            return ApiResponse.onSuccess(null);
+        } catch (Exception e) {
+            log.error("회원 탈퇴 실패", e);
+            return ApiResponse.onFailure("DELETE_ERROR", "Failed to delete member", null);
+        }
+    }
+
 //
 //    @GetMapping("/{memberId}")
 //    public ResponseEntity<MemberDto.MemberResponseDto> getUserInfo(@PathVariable Long memberId) {
