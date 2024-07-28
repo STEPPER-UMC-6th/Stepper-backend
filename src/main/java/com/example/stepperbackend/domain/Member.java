@@ -50,4 +50,7 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MoreExercise> moreExerciseList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MyExercise> myExerciseList = new ArrayList<>();
 }
