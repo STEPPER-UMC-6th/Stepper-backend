@@ -37,7 +37,6 @@ public class MoreExerciseController {
     @GetMapping("/more")
     public ApiResponse<List<MoreExerciseDto.MoreExerciseResponseDto>> getMoreExercise(@RequestParam LocalDate date, HttpServletRequest request) {
 
-        System.out.println("MoreExerciseController.getMoreExercise");
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
         List<MoreExerciseDto.MoreExerciseResponseDto> response = moreExerciseService.getMoreExerciseList(email, date);
