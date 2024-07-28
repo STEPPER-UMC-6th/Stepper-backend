@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +41,9 @@ public class MyExercise {
 
     @NotNull
     private String channel_name;
+
+    @OneToMany(mappedBy = "myExercise", cascade = CascadeType.ALL)
+    private List<ExerciseStep> exerciseStepList = new ArrayList<>();
 
 }
 
