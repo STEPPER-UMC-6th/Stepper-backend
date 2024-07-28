@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -81,6 +82,7 @@ public class MemberController {
         try {
             String token = request.getHeader("Authorization").substring(7);
             String email = jwtUtil.getUsername(token);
+
 
             memberService.deleteMember(email);
             SecurityContextHolder.clearContext();
