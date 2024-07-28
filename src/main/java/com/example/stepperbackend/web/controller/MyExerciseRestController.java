@@ -28,23 +28,23 @@ public class MyExerciseRestController {
 
     private final MyExerciseServiceImpl myExerciseService;
 
-    String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+    @PostMapping("/add")
+    @Operation(summary = "나만의 운동 추가 API", description = "나만의 운동 추가")
+    public ApiResponse<MyExerciseResponseDTO.AddExerciseDTO> Add(@RequestBody @Valid MyExerciseRequestDTO.AddExerciseDto request) {
 
-        @PostMapping("/add")
-        @Operation(summary = "나만의 운동 추가 API",description = "나만의 운동 추가")
-        public ApiResponse<MyExerciseResponseDTO.AddExerciseDTO> Add(@RequestBody @Valid MyExerciseRequestDTO.AddExerciseDto request){
-
-            MyExercise myExercise = myExerciseService.addMyExercise(request, memberId);
-            return ApiResponse.onSuccess(MyExerciseConverter.toAddExerciseDTO(myExercise));
-        }
-
-        @PostMapping("/check")
-        @Operation(summary = "나만의 운동 조회 API",description = "나만의 운동 조회")
-        public ApiResponse<List<MyExerciseResponseDTO.CheckExerciseDTO>> check(@RequestBody @Valid MyExerciseRequestDTO.CheckExerciseDto request){
-
-            List<MyExercise> myExercise = myExerciseService.checkMyExercise(request, memberId);
-            return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise));
-        }
-
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        MyExercise myExercise = myExerciseService.addMyExercise(request, memberId);
+        return ApiResponse.onSuccess(MyExerciseConverter.toAddExerciseDTO(myExercise));
     }
+
+    @PostMapping("/check")
+    @Operation(summary = "나만의 운동 조회 API", description = "나만의 운동 조회")
+    public ApiResponse<List<MyExerciseResponseDTO.CheckExerciseDTO>> check(@RequestBody @Valid MyExerciseRequestDTO.CheckExerciseDto request) {
+
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<MyExercise> myExercise = myExerciseService.checkMyExercise(request, memberId);
+        return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise));
+    }
+
+}
 
