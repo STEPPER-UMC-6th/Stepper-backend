@@ -18,6 +18,8 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // member
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "사용자를 찾을 수 없습니다."),
+    EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "MEMBER4002", "이미 존재하는 이메일입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEMBER4003", "잘못된 비밀번호입니다."),
 
     // more_exercise
     MORE_EXERCISE_NOT_FOUND(HttpStatus.BAD_REQUEST, "MORE_EXERCISE4001", "추가 운동 기록을 찾을 수 없습니다."),
