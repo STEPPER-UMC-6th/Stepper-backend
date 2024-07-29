@@ -17,6 +17,9 @@ import com.example.stepperbackend.web.dto.ExerciseCardDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,14 +34,22 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
     public ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto request, String email) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
         ExerciseCard exerciseCard = ExerciseCardConverter.toEntity(request, member);
-        request.getStepList().stream()
+        exerciseCardRepository.save(exerciseCard);
+
+        List<ExerciseStep> exerciseStepList = request.getStepList().stream()
                 .map(exerciseStepRequestDto -> {
                     MyExercise myExercise = myExerciseRepository.findById(exerciseStepRequestDto.getMyExerciseId())
                             .orElseThrow(() -> new MyExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND));
                     ExerciseStep exerciseStep = ExerciseStepConverter.toEntity(exerciseStepRequestDto, exerciseCard, myExercise);
                     return exerciseStepRepository.save(exerciseStep);
-                });
-        return ExerciseCardConverter.toDto(exerciseCard);
+                })
+                .collect(Collectors.toList());
+
+        exerciseCard.setExerciseStepList(exerciseStepList);
+
+        return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
     }
+
 }
