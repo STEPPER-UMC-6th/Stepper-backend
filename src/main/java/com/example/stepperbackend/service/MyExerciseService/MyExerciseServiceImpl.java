@@ -5,7 +5,7 @@ import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
-import com.example.stepperbackend.web.dto.MyExercise.MyExerciseRequestDTO;
+import com.example.stepperbackend.web.dto.MyExerciseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     private final MyExerciseRepository myExerciseRepository;
     private final MemberRepository memberRepository;
 
-    public MyExercise addMyExercise(MyExerciseRequestDTO.AddExerciseDto request, String memberEmail) {
+    public MyExercise addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberEmail) {
             Member member = memberRepository.findByEmail(memberEmail)
                     .orElseThrow(() -> new IllegalArgumentException("User not found" + memberEmail));
 
@@ -34,7 +34,7 @@ public class MyExerciseServiceImpl implements MyExerciseService {
 
     }
 
-    public List<MyExercise> checkMyExercise(MyExerciseRequestDTO.CheckExerciseDto request, String memberEmail) {
+    public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
         return exercises.stream()
