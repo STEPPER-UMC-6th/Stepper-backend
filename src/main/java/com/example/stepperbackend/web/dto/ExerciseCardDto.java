@@ -17,9 +17,11 @@ public class ExerciseCardDto {
     public static class ExerciseCardRequestDto {
         private LocalDate date;
         private String week;
-        private LocalTime stopWatch;
+        private int hour;
+        private int minute;
+        private int second;
         private String materials;
-        private BodyPart bodyPart;
+        private String bodyPart;
         private List<ExerciseStepDto.ExerciseStepRequestDto> stepList;
     }
 
@@ -31,8 +33,11 @@ public class ExerciseCardDto {
         private Long id;
         private LocalDate date;
         private Week week;
-        private LocalTime stopWatch;
+        private int hour;
+        private int minute;
+        private int second;
         private String materials;
         private BodyPart bodyPart;
+        private List<Long> myExerciseList;
     }
 }

@@ -30,7 +30,7 @@ public class MyExercise {
     @NotNull
     private String url;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private BodyPart body_part;
 
     @NotNull

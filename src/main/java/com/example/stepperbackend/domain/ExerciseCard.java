@@ -3,10 +3,8 @@ package com.example.stepperbackend.domain;
 
 import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.domain.enums.Week;
-import com.example.stepperbackend.domain.mapping.Badge;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -30,7 +29,11 @@ public class ExerciseCard {
     @Enumerated(EnumType.STRING)
     private Week week;
 
-    private LocalTime stopwatch;
+    private int hour;
+
+    private int minute;
+
+    private int second;
 
     private boolean status;
 
