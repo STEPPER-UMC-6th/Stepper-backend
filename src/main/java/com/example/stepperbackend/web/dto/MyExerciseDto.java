@@ -11,16 +11,10 @@ public class MyExerciseDto {
     public static class AddExerciseRequestDto {
 
         private String url;
-        private BodyPart body_part;
+        private Integer body_part;
         private String video_title;
         private String video_image;
         private String channel_name;
-    }
-
-    @Getter
-    public static class CheckExerciseRequestDto {
-
-        private BodyPart body_part;
     }
 
     @Builder
@@ -28,9 +22,15 @@ public class MyExerciseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AddExerciseResponseDTO {
-        private String status;
-        private String message;
+        private Long exerciseId;
     }
+
+
+    @Getter
+    public static class CheckExerciseRequestDto {
+        private BodyPart body_part;
+    }
+
 
     @Builder
     @Getter

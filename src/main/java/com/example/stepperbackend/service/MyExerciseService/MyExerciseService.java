@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MyExerciseService {
 
-    public MyExercise addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberId);
+    public MyExerciseDto.AddExerciseResponseDTO addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberId);
 
     public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberId);
 }

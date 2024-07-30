@@ -27,8 +27,8 @@ public class MyExerciseRestController {
         public ApiResponse<MyExerciseDto.AddExerciseResponseDTO> Add(@RequestBody @Valid MyExerciseDto.AddExerciseRequestDto request){
             String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-            MyExercise myExercise = myExerciseService.addMyExercise(request, memberId);
-            return ApiResponse.onSuccess(MyExerciseConverter.toAddExerciseDTO(myExercise));
+            MyExerciseDto.AddExerciseResponseDTO myExercise = myExerciseService.addMyExercise(request, memberId);
+            return ApiResponse.onSuccess(myExercise);
         }
 
         @PostMapping("/check")

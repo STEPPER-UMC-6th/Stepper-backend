@@ -26,19 +26,20 @@ public class MyExercise {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @NotNull
+    @Column(nullable = false)
     private String url;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private BodyPart body_part;
 
-    @NotNull
+    @Column(nullable = false, length = 100)
     private String video_title;
 
-    @NotNull
+    @Column(nullable = false)
     private String video_image;
 
-    @NotNull
+    @Column(nullable = false, length = 100)
     private String channel_name;
 
 }

@@ -1,6 +1,7 @@
 package com.example.stepperbackend.service.MyExerciseService;
 
 
+import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -17,22 +18,17 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     private final MyExerciseRepository myExerciseRepository;
     private final MemberRepository memberRepository;
 
-    public MyExercise addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberEmail) {
+    public MyExerciseDto.AddExerciseResponseDTO addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberEmail) {
             Member member = memberRepository.findByEmail(memberEmail)
                     .orElseThrow(() -> new IllegalArgumentException("User not found" + memberEmail));
 
-                MyExercise myExercise = MyExercise.builder()
-                        .url(request.getUrl())
-                        .channel_name(request.getChannel_name())
-                        .video_image(request.getVideo_image())
-                        .video_title(request.getVideo_title())
-                        .body_part(request.getBody_part())
-                        .member(member)
-                        .build();
+                MyExercise myExercise = MyExerciseConverter.toAddExerciseEntity(request, member);
+                myExerciseRepository.save(myExercise);
 
-                return myExerciseRepository.save(myExercise);
+                return MyExerciseConverter.toAddExerciseDTO(myExercise);
 
     }
+
 
     public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
