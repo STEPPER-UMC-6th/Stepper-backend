@@ -54,17 +54,22 @@ public class MyExerciseConverter {
                 .build();
     }
 
+    public static MyExerciseDto.AddExerciseResponseDTO toAddExerciseDTO(MyExercise myExercise) {
+        return MyExerciseDto.AddExerciseResponseDTO.builder()
+                .exerciseId(myExercise.getExercise_id())
+                .build();
+    }
 
-    public static List<MyExerciseResponseDTO.CheckExerciseDTO> toCheckExerciseListDTO(List<MyExercise> myExercise) {
+    public static List<MyExerciseDto.CheckExerciseResponseDTO> toCheckExerciseListDTO(List<MyExercise> myExercise) {
 
         return myExercise.stream()
                 .map(MyExerciseConverter::toCheckExerciseDTO)
                 .collect(Collectors.toList());
     }
 
-    public static MyExerciseResponseDTO.CheckExerciseDTO toCheckExerciseDTO(MyExercise myExercise) {
+    public static MyExerciseDto.CheckExerciseResponseDTO toCheckExerciseDTO(MyExercise myExercise) {
 
-        return MyExerciseResponseDTO.CheckExerciseDTO.builder()
+        return MyExerciseDto.CheckExerciseResponseDTO.builder()
                 .url(myExercise.getUrl())
                 .video_title(myExercise.getVideo_title())
                 .video_image(myExercise.getVideo_image())

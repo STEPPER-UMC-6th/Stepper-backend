@@ -37,8 +37,6 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
-
-
                 List<MyExercise> filteredList = exercises.stream()
                         .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
                                 myExercise.getMember().getEmail().equals(memberEmail)).toList();

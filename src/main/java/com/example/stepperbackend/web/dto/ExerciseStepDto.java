@@ -1,6 +1,5 @@
 package com.example.stepperbackend.web.dto;
 
-import com.example.stepperbackend.web.dto.MyExercise.MyExerciseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +19,6 @@ public class ExerciseStepDto {
     @AllArgsConstructor
     public static class ExerciseStepResponseDto {
         private int step;
-        private MyExerciseResponseDTO.CheckExerciseDTO myExercise;
+        private MyExerciseDto.CheckExerciseResponseDTO myExercise;
     }
 }

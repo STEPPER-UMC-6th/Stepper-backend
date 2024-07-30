@@ -1,4 +1,4 @@
-package com.example.stepperbackend.service.WriteDiaryService;
+package com.example.stepperbackend.service.RateDiaryService;
 
 import com.example.stepperbackend.converter.RateDiaryConverter;
 import com.example.stepperbackend.domain.Member;

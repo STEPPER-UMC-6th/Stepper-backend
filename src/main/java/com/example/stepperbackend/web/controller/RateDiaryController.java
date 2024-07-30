@@ -1,7 +1,7 @@
 package com.example.stepperbackend.web.controller;
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
-import com.example.stepperbackend.service.WriteDiaryService.RateDiaryService;
+import com.example.stepperbackend.service.RateDiaryService.RateDiaryService;
 import com.example.stepperbackend.web.dto.RateDiaryDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

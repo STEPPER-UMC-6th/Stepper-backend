@@ -21,7 +21,7 @@ public class RateDiaryConverter {
 
     public static RateDiaryDto.RateDiaryResponseDTO toDto(RateDiary rateDiary) {
         return RateDiaryDto.RateDiaryResponseDTO.builder()
-                .id(rateDiary.getId())
+                .rate_id(rateDiary.getId())
                 .build();
     }
 }

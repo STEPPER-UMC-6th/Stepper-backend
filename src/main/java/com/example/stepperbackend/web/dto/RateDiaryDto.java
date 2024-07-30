@@ -21,8 +21,7 @@ public class RateDiaryDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RateDiaryResponseDTO {
-        private Long id;
-        private String status;
-        private String message;
+        private Long rate_id;
+
     }
 }
