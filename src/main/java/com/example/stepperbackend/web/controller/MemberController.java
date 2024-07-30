@@ -59,7 +59,8 @@ public class MemberController {
             String username = authentication.getName();
             log.info("인증된 사용자 이름: {}", username);
 
-            String jwt = jwtUtil.createJwt(username, 60 * 60 * 10L);
+            long expirationTimeMs = 60 * 60 * 10L * 1000L;
+            String jwt = jwtUtil.createJwt(username, expirationTimeMs);
             log.info("생성된 JWT: {}", jwt);
 
             return ApiResponse.onSuccess(jwt);

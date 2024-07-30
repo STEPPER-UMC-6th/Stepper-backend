@@ -26,21 +26,24 @@ public class MyExercise {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(nullable = false)
+    @NotNull
     private String url;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private BodyPart body_part;
 
-    @Column(nullable = false, length = 100)
+    @NotNull
     private String video_title;
 
-    @Column(nullable = false)
+    @NotNull
     private String video_image;
 
-    @Column(nullable = false, length = 100)
+    @NotNull
     private String channel_name;
+
+    @OneToMany(mappedBy = "myExercise", cascade = CascadeType.ALL)
+    private List<ExerciseStep> exerciseStepList = new ArrayList<>();
 
 }
 

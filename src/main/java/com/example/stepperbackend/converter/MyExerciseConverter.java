@@ -52,29 +52,23 @@ public class MyExerciseConverter {
                 .body_part(bodyPart)
                 .member(member)
                 .build();
-
-    }
-
-    public static MyExerciseDto.AddExerciseResponseDTO toAddExerciseDTO(MyExercise myExercise) {
-        return MyExerciseDto.AddExerciseResponseDTO.builder()
-                .exerciseId(myExercise.getExercise_id())
-                .build();
     }
 
 
-
-    public static List<MyExerciseDto.CheckExerciseResponseDTO> toCheckExerciseDTO(List<MyExercise> myExercise) {
+    public static List<MyExerciseResponseDTO.CheckExerciseDTO> toCheckExerciseListDTO(List<MyExercise> myExercise) {
 
         return myExercise.stream()
-                .map(myExercise1 -> MyExerciseDto.CheckExerciseResponseDTO.builder()
-                                .url(myExercise1.getUrl())
-                                .video_title(myExercise1.getVideo_title())
-                                .video_image(myExercise1.getVideo_image())
-                                .channel_name(myExercise1.getChannel_name())
-                        .build())
+                .map(MyExerciseConverter::toCheckExerciseDTO)
                 .collect(Collectors.toList());
+    }
 
+    public static MyExerciseResponseDTO.CheckExerciseDTO toCheckExerciseDTO(MyExercise myExercise) {
 
-
+        return MyExerciseResponseDTO.CheckExerciseDTO.builder()
+                .url(myExercise.getUrl())
+                .video_title(myExercise.getVideo_title())
+                .video_image(myExercise.getVideo_image())
+                .channel_name(myExercise.getChannel_name())
+                .build();
     }
 }

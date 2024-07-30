@@ -60,6 +60,9 @@ public class Member extends BaseEntity {
     private List<Badge> bageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<ExerciseCard> exerciseCardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<RateDiary> rateDiaryList = new ArrayList<>();
 
 }
