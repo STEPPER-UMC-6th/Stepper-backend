@@ -31,8 +31,7 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
         MoreExercise moreExercise = MoreExerciseConverter.toEntity(dto, member);
         moreExerciseRepository.save(moreExercise);
-        MoreExerciseDto.MoreExerciseResponseDto response = MoreExerciseConverter.toDto(moreExercise);
-        return response;
+        return MoreExerciseConverter.toDto(moreExercise);
     }
 
     @Override
