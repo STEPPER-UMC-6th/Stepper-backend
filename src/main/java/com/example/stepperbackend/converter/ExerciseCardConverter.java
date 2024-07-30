@@ -6,8 +6,10 @@ import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.domain.enums.Week;
 import com.example.stepperbackend.web.dto.ExerciseCardDto;
+import com.example.stepperbackend.web.dto.ExerciseStepDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExerciseCardConverter {
 
@@ -27,7 +29,8 @@ public class ExerciseCardConverter {
 
     public static ExerciseCardDto.ExerciseCardResponseDto toDto(ExerciseCard exerciseCard, List<ExerciseStep> exerciseSteps) {
 
-        List<Long> myExerciseList = exerciseSteps.stream().map(exerciseStep -> exerciseStep.getMyExercise().getExercise_id()).toList();
+        List<ExerciseStepDto.ExerciseStepResponseDto> exerciseStepList = exerciseSteps.stream()
+                .map(ExerciseStepConverter::toDto).collect(Collectors.toList());
 
         return ExerciseCardDto.ExerciseCardResponseDto.builder()
                 .id(exerciseCard.getId())
@@ -38,7 +41,7 @@ public class ExerciseCardConverter {
                 .second(exerciseCard.getSecond())
                 .materials(exerciseCard.getMaterials())
                 .bodyPart(exerciseCard.getBodyPart())
-                .myExerciseList(myExerciseList)
+                .setpList(exerciseStepList)
                 .build();
     }
 }

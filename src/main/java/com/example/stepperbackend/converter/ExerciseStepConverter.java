@@ -4,6 +4,7 @@ import com.example.stepperbackend.domain.ExerciseCard;
 import com.example.stepperbackend.domain.ExerciseStep;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.web.dto.ExerciseStepDto;
+import com.example.stepperbackend.web.dto.MyExercise.MyExerciseResponseDTO;
 
 public class ExerciseStepConverter {
 
@@ -13,6 +14,16 @@ public class ExerciseStepConverter {
                 .stepStatus(false)
                 .exerciseCard(exerciseCard)
                 .myExercise(myExercise)
+                .build();
+    }
+
+    public static ExerciseStepDto.ExerciseStepResponseDto toDto(ExerciseStep step) {
+
+        MyExerciseResponseDTO.CheckExerciseDTO myExerciseDto = MyExerciseConverter.toCheckExerciseDTO(step.getMyExercise());
+
+        return ExerciseStepDto.ExerciseStepResponseDto.builder()
+                .step(step.getStep())
+                .myExercise(myExerciseDto)
                 .build();
     }
 }

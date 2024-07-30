@@ -38,6 +38,6 @@ public class ExerciseCardDto {
         private int second;
         private String materials;
         private BodyPart bodyPart;
-        private List<Long> myExerciseList;
+        private List<ExerciseStepDto.ExerciseStepResponseDto> setpList;
     }
 }
