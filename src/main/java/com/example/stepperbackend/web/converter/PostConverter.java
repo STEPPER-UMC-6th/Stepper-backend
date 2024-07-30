@@ -1,9 +1,12 @@
-package com.example.converter;
-
 package com.example.stepperbackend.web.converter;
-        package com.example.stepperbackend.web.dto.PostDto;
+     import com.example.stepperbackend.web.dto.PostDto;
+     import com.example.stepperbackend.web.dto.PostDto.PostRequestDto;
+     import com.example.stepperbackend.web.dto.PostDto.PostResponseDto;
 
-import java.time.format.DateTimeFormatter;
+
+     import com.example.stepperbackend.domain.Post;
+
+     import java.time.format.DateTimeFormatter;
 
 public class PostConverter {
 

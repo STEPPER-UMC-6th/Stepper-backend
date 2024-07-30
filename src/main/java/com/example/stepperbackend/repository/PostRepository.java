@@ -1,6 +1,6 @@
-package com.stepper.stepperbackend.repository;
+package com.example.stepperbackend.repository;
 
-import com.stepper.stepperbackend.domain.Post;
+import com.example.stepperbackend.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Long> {

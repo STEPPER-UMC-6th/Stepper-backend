@@ -1,8 +1,8 @@
-package com.stepper.stepperbackend.controller;
+package com.example.stepperbackend.web.controller;
 
-import com.stepper.stepperbackend.web.dto.PostDto.PostRequestDto;
-import com.stepper.stepperbackend.web.dto.PostDto.PostResponseDto;
-import com.stepper.stepperbackend.service.PostService;
+import com.example.stepperbackend.web.dto.PostDto.PostRequestDto;
+import com.example.stepperbackend.web.dto.PostDto.PostResponseDto;
+import com.example.stepperbackend.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
