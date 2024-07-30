@@ -1,6 +1,8 @@
 package com.example.stepperbackend.service.MyExerciseService;
 
 
+import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.ExerciseHandler;
 import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
@@ -8,6 +10,8 @@ import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
 import com.example.stepperbackend.web.dto.MyExerciseDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
+import org.hibernate.tool.schema.spi.ExceptionHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +38,16 @@ public class MyExerciseServiceImpl implements MyExerciseService {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
 
-        return exercises.stream()
-                .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
-                        myExercise.getMember().getEmail().equals(memberEmail))
-                .toList();
+
+                List<MyExercise> filteredList = exercises.stream()
+                        .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
+                                myExercise.getMember().getEmail().equals(memberEmail)).toList();
+
+                if(filteredList.isEmpty()){
+                    throw new ExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND);
+                }
+
+        return filteredList;
+
     }
 }
