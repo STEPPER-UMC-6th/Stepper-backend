@@ -29,4 +29,14 @@ public class ExerciseCardController {
         ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.addExerciseCard(dto,email);
         return ApiResponse.onSuccess(response);
     }
+
+    @Operation(summary = "운동 카드 상세 조회 API",description = "운동 카드 상세 조회")
+    @PostMapping("/{exerciseId}/")
+    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> getExerciseCardDetail(@PathVariable(name = "exerciseId") Long exerciseId, HttpServletRequest request){
+
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.getExerciseCardDetail(exerciseId,email);
+        return ApiResponse.onSuccess(response);
+    }
 }

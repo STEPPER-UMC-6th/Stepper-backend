@@ -1,6 +1,7 @@
 package com.example.stepperbackend.service.exerciseCardService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.ExerciseCardHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MyExerciseHandler;
 import com.example.stepperbackend.converter.ExerciseCardConverter;
@@ -35,13 +36,17 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
+        // 운동 카드 저장
         ExerciseCard exerciseCard = ExerciseCardConverter.toEntity(request, member);
         exerciseCardRepository.save(exerciseCard);
 
+        // 운동 카드 단계
         List<ExerciseStep> exerciseStepList = request.getStepList().stream()
                 .map(exerciseStepRequestDto -> {
+                    // 나만의 운동 찾기
                     MyExercise myExercise = myExerciseRepository.findById(exerciseStepRequestDto.getMyExerciseId())
                             .orElseThrow(() -> new MyExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND));
+                    // exerciseStep 저장
                     ExerciseStep exerciseStep = ExerciseStepConverter.toEntity(exerciseStepRequestDto, exerciseCard, myExercise);
                     return exerciseStepRepository.save(exerciseStep);
                 })
@@ -49,6 +54,18 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
 
         exerciseCard.setExerciseStepList(exerciseStepList);
 
+        return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
+    }
+
+    @Override
+    public ExerciseCardDto.ExerciseCardResponseDto getExerciseCardDetail(Long exerciseId, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        ExerciseCard exerciseCard = exerciseCardRepository.findById(exerciseId)
+                .orElseThrow(() -> new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND));
+
+        List<ExerciseStep> exerciseStepList = exerciseStepRepository.findAllByExerciseCard(exerciseCard);
         return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
     }
 

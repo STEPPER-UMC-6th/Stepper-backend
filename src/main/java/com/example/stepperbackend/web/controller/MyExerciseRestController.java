@@ -43,7 +43,7 @@ public class MyExerciseRestController {
 
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
         List<MyExercise> myExercise = myExerciseService.checkMyExercise(request, memberId);
-        return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseDTO(myExercise));
+        return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseListDTO(myExercise));
     }
 
 }
