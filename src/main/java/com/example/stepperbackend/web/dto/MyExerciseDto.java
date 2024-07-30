@@ -11,7 +11,7 @@ public class MyExerciseDto {
     public static class AddExerciseRequestDto {
 
         private String url;
-        private Integer body_part;
+        private String body_part;
         private String video_title;
         private String video_image;
         private String channel_name;

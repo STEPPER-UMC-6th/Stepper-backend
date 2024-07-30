@@ -25,7 +25,11 @@ public enum ErrorStatus implements BaseErrorCode {
     MORE_EXERCISE_NOT_FOUND(HttpStatus.BAD_REQUEST, "MORE_EXERCISE4001", "추가 운동 기록을 찾을 수 없습니다."),
 
     // badge
-    BADGE_NOT_FOUND(HttpStatus.BAD_REQUEST, "BADGE4001", "벳지가 없습니다.");
+    BADGE_NOT_FOUND(HttpStatus.BAD_REQUEST, "BADGE4001", "벳지가 없습니다."),
+
+    //my_exercise
+    MY_EXERCISE_NOT_FOUND(HttpStatus.BAD_REQUEST, "MY_EXERCISE4001", "나만의 운동이 없습니다.");
+
 
     private final HttpStatus httpStatus;
     private final String code;

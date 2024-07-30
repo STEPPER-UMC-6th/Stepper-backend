@@ -33,8 +33,9 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
+
         return exercises.stream()
-                .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part()) &&
+                .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
                         myExercise.getMember().getEmail().equals(memberEmail))
                 .toList();
     }

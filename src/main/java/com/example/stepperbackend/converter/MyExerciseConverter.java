@@ -14,31 +14,31 @@ public class MyExerciseConverter {
         BodyPart bodyPart = null;
 
         switch(request.getBody_part()) {
-            case 1:
+            case "머리":
                 bodyPart = BodyPart.머리;
                 break;
-            case 2:
+            case "가슴":
                 bodyPart = BodyPart.가슴;
                 break;
-            case 3:
+            case "복부":
                 bodyPart = BodyPart.복부;
                 break;
-            case 4:
+            case "골반":
                 bodyPart = BodyPart.골반;
                 break;
-            case 5:
+            case "어깨팔":
                 bodyPart = BodyPart.어깨팔;
                 break;
-            case 6:
+            case "무릎다리":
                 bodyPart = BodyPart.무릎다리;
                 break;
-            case 7:
+            case "등":
                 bodyPart = BodyPart.등;
                 break;
-            case 8:
+            case "허리":
                 bodyPart = BodyPart.허리;
                 break;
-            case 9:
+            case "발":
                 bodyPart = BodyPart.발;
                 break;
 
@@ -60,6 +60,8 @@ public class MyExerciseConverter {
                 .exerciseId(myExercise.getExercise_id())
                 .build();
     }
+
+
 
     public static List<MyExerciseDto.CheckExerciseResponseDTO> toCheckExerciseDTO(List<MyExercise> myExercise) {
 
