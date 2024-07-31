@@ -38,7 +38,7 @@ public class RateDiaryServiceImpl implements RateDiaryService {
             throw new RateDiaryHandler(ErrorStatus.EXERCISE_CARD_DOES_NOT_BELONG_TO_USER);
         }
 
-        RateDiary rateDiary = RateDiaryConverter.toEntity(request,exerciseCard, member);
+        RateDiary rateDiary = RateDiaryConverter.toEntity(request, exerciseCard, member);
         rateDiaryRepository.save(rateDiary);
         return RateDiaryConverter.toDto(rateDiary);
     }

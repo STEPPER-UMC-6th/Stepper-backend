@@ -33,7 +33,7 @@ public class RateDiaryDto {
     @AllArgsConstructor
     public static class RateDiaryCheckResponseDTO {
         private Long exerciseCardId;
-        private BodyPart bodyPart;
+        private String bodyPart;
         private Long conditionRate;
         private Long painRate;
         private String painMemo;

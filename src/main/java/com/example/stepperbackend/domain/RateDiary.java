@@ -1,7 +1,9 @@
 package com.example.stepperbackend.domain;
 
+import com.example.stepperbackend.domain.enums.BodyPart;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.http.StreamingHttpOutputMessage;
 
 import java.time.LocalDate;
 
@@ -35,4 +37,6 @@ public class RateDiary {
     private String painMemo;
 
     private String painImage;
+
+    private String bodyPart;
 }
