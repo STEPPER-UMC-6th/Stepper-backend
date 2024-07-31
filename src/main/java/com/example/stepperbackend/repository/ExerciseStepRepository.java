@@ -9,4 +9,6 @@ import java.util.List;
 public interface ExerciseStepRepository extends JpaRepository<ExerciseStep, Long> {
 
     List<ExerciseStep> findAllByExerciseCard(ExerciseCard exerciseCard);
+
+    void deleteAllByExerciseCard(ExerciseCard exerciseCardId);
 }

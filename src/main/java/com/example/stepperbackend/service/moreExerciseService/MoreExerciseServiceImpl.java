@@ -1,6 +1,7 @@
 package com.example.stepperbackend.service.moreExerciseService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.ExerciseCardHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.ExerciseHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.domain.Member;
@@ -38,9 +39,11 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
     public List<MoreExerciseDto.MoreExerciseResponseDto> getMoreExerciseList(String email, LocalDate date) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
-        List<MoreExercise> moreExerciseList = Optional.ofNullable(moreExerciseRepository.findAllByMemberAndDate(member, date))
-                .filter(list -> !list.isEmpty())
-                .orElseThrow(() -> new ExerciseHandler(ErrorStatus.MORE_EXERCISE_NOT_FOUND));
+        List<MoreExercise> moreExerciseList = moreExerciseRepository.findAllByMemberAndDate(member, date);
+
+        if(moreExerciseList.isEmpty()){
+            throw new ExerciseHandler(ErrorStatus.MORE_EXERCISE_NOT_FOUND);
+        }
         return moreExerciseList.stream().map(MoreExerciseConverter::toDto).collect(Collectors.toList());
     }
 }

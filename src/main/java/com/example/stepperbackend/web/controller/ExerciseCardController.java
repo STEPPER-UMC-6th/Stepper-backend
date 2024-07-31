@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/exercise-card")
@@ -20,23 +22,33 @@ public class ExerciseCardController {
     private final JWTUtil jwtUtil;
     final ExerciseCardService exerciseCardService;
 
-    @Operation(summary = "운동 카드 추가 API",description = "운동 카드 추가")
+    @Operation(summary = "운동 카드 추가 API", description = "운동 카드 추가")
     @PostMapping("/add")
-    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> addExerciseCard(@RequestBody ExerciseCardDto.ExerciseCardRequestDto dto, HttpServletRequest request){
+    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> addExerciseCard(@RequestBody ExerciseCardDto.ExerciseCardRequestDto dto, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
-        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.addExerciseCard(dto,email);
+        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.addExerciseCard(dto, email);
         return ApiResponse.onSuccess(response);
     }
 
-    @Operation(summary = "운동 카드 상세 조회 API",description = "운동 카드 상세 조회")
+    @Operation(summary = "운동 카드 상세 조회 API", description = "운동 카드 상세 조회")
     @PostMapping("/{exerciseId}/")
-    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> getExerciseCardDetail(@PathVariable(name = "exerciseId") Long exerciseId, HttpServletRequest request){
+    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> getExerciseCardDetail(@PathVariable(name = "exerciseId") Long exerciseId, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
-        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.getExerciseCardDetail(exerciseId,email);
+        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.getExerciseCardDetail(exerciseId);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "월별 운동 카드 상태 조회 API", description = "월별 운동 카드 상태 조회")
+    @GetMapping
+    public ApiResponse<List<ExerciseCardDto.ExerciseCardStatusResponseDto>> getExerciseStatusByMonth(@RequestParam("month") int month, HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        List<ExerciseCardDto.ExerciseCardStatusResponseDto> response = exerciseCardService.getExerciseStatusByMonth(month, email);
         return ApiResponse.onSuccess(response);
     }
 }
