@@ -44,4 +44,15 @@ public class ExerciseCardConverter {
                 .setpList(exerciseStepList)
                 .build();
     }
+
+    public static ExerciseCard updateEntity(ExerciseCard existingExerciseCard, ExerciseCardDto.ExerciseCardRequestDto dto) {
+        existingExerciseCard.setDate(dto.getDate());
+        existingExerciseCard.setWeek(Week.valueOf(dto.getWeek().toString()));
+        existingExerciseCard.setHour(dto.getHour());
+        existingExerciseCard.setMinute(dto.getMinute());
+        existingExerciseCard.setSecond(dto.getSecond());
+        existingExerciseCard.setMaterials(dto.getMaterials());
+        existingExerciseCard.setBodyPart(BodyPart.valueOf(dto.getBodyPart()));
+        return existingExerciseCard;
+    }
 }
