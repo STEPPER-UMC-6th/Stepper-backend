@@ -1,13 +1,12 @@
 package com.example.stepperbackend.service.RateDiaryService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.ExerciseHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MyExerciseHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.RateDiaryHandler;
 import com.example.stepperbackend.converter.RateDiaryConverter;
-import com.example.stepperbackend.domain.ExerciseCard;
-import com.example.stepperbackend.domain.Member;
-import com.example.stepperbackend.domain.RateDiary;
+import com.example.stepperbackend.domain.*;
 import com.example.stepperbackend.repository.ExerciseCardRepository;
 import com.example.stepperbackend.repository.ExerciseStepRepository;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -42,14 +41,19 @@ public class RateDiaryServiceImpl implements RateDiaryService {
         rateDiaryRepository.save(rateDiary);
         return RateDiaryConverter.toDto(rateDiary);
     }
+
+
+
+    public List<RateDiary> checkRateDiary (String memberEmail) {
+
+        List<RateDiary> rateDiaries = rateDiaryRepository.findAll().stream()
+                .filter(rateDiary -> rateDiary.getMember().getEmail().equals(memberEmail)).toList();
+
+        if(rateDiaries.isEmpty()) {throw new RateDiaryHandler(ErrorStatus.RATE_DIARY_NOT_FOUND);}
+
+        return rateDiaries;
+    }
 }
 
-//    public List<RateDiary> checkRateDiary(RateDiaryDto.RateDiaryCheckRequestDTO request, String memberEmail) {
-//        Member member = memberRepository.findByEmail(memberEmail)
-//                .orElseThrow(() -> new IllegalArgumentException("User not found" + memberEmail));
-//
-//        RateDiary rateDiary = RateDiaryConverter.toEntity(request, member);
-//
-//
-//    }
+
 
