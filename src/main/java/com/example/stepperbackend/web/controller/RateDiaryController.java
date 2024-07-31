@@ -1,16 +1,18 @@
 package com.example.stepperbackend.web.controller;
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
+import com.example.stepperbackend.converter.MyExerciseConverter;
+import com.example.stepperbackend.converter.RateDiaryConverter;
+import com.example.stepperbackend.domain.RateDiary;
 import com.example.stepperbackend.service.RateDiaryService.RateDiaryService;
 import com.example.stepperbackend.web.dto.RateDiaryDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,12 +31,13 @@ public class RateDiaryController {
     }
 
 
-//    @PostMapping("/check")
-//    @Operation(summary = "평가일지 조회 API", description = "평가일지 조회")
-//    public ApiResponse<RateDiaryDto.RateDiaryCheckResponseDTO> Check(@RequestBody @Valid RateDiaryDto.RateDiaryCheckRequestDTO request) {
-//        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-//        RateDiaryDto.RateDiaryCheckResponseDTO rateDiary = rateDiaryService.checkRateDiary(request, memberId);
-//
-//        return null;
-//    }
+    @GetMapping("/check")
+    @Operation(summary = "평가일지 조회 API", description = "평가일지 조회")
+    public ApiResponse<List<RateDiaryDto.RateDiaryCheckResponseDTO>> Check() {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        List<RateDiary> rateDiary = rateDiaryService.checkRateDiary(memberId);
+
+        return ApiResponse.onSuccess(RateDiaryConverter.toCheckRateDiaryListDTO(rateDiary));
+    }
 }

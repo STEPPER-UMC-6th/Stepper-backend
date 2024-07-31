@@ -1,10 +1,12 @@
 package com.example.stepperbackend.web.dto;
 
-import com.example.stepperbackend.domain.enums.BodyPart;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+
 
 
 public class RateDiaryDto {
@@ -27,11 +29,13 @@ public class RateDiaryDto {
     }
 
 
+
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RateDiaryCheckResponseDTO {
+        private LocalDate date;
         private Long exerciseCardId;
         private String bodyPart;
         private Long conditionRate;

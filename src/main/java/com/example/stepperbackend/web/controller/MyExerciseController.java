@@ -30,11 +30,11 @@ public class MyExerciseController {
         return ApiResponse.onSuccess(myExercise);
     }
 
-    @PostMapping("/check")
+    @GetMapping("/check")
     @Operation(summary = "나만의 운동 조회 API", description = "나만의 운동 조회")
     public ApiResponse<List<MyExerciseDto.CheckExerciseResponseDTO>> check(@RequestBody @Valid MyExerciseDto.CheckExerciseRequestDto request) {
-
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
         List<MyExercise> myExercise = myExerciseService.checkMyExercise(request, memberId);
         return ApiResponse.onSuccess(MyExerciseConverter.toCheckExerciseListDTO(myExercise));
     }
