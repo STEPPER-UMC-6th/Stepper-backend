@@ -70,6 +70,7 @@ public class MyExerciseConverter {
     public static MyExerciseDto.CheckExerciseResponseDTO toCheckExerciseDTO(MyExercise myExercise) {
 
         return MyExerciseDto.CheckExerciseResponseDTO.builder()
+                .exerciseId(myExercise.getExercise_id())
                 .url(myExercise.getUrl())
                 .video_title(myExercise.getVideo_title())
                 .video_image(myExercise.getVideo_image())
