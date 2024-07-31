@@ -102,7 +102,6 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
     public List<ExerciseCardDto.ExerciseCardStatusResponseDto> getExerciseStatusByMonth(int month, String email) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
-
         List<ExerciseCard> exerciseCardList = exerciseCardRepository.findAllByMemberAndMonth(member, month);
 
         if(exerciseCardList.isEmpty()){
