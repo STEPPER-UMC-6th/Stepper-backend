@@ -48,4 +48,7 @@ public class ExerciseCard {
 
     @OneToMany(mappedBy = "exerciseCard", cascade = CascadeType.ALL)
     private List<ExerciseStep> exerciseStepList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "exerciseCard", cascade = CascadeType.ALL)
+    private RateDiary rateDiary;
 }

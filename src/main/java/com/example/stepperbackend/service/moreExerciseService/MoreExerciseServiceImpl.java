@@ -42,6 +42,5 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
                 .filter(list -> !list.isEmpty())
                 .orElseThrow(() -> new ExerciseHandler(ErrorStatus.MORE_EXERCISE_NOT_FOUND));
         return moreExerciseList.stream().map(MoreExerciseConverter::toDto).collect(Collectors.toList());
-
     }
 }

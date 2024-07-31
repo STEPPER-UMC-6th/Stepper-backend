@@ -20,11 +20,21 @@ public class RateDiaryController {
     private final RateDiaryService rateDiaryService;
 
     @PostMapping("/write")
-    @Operation(summary = "평가일지 작성 API",description = "평가일지 작성")
-    public ApiResponse<RateDiaryDto.RateDiaryResponseDTO> Write(@RequestBody @Valid RateDiaryDto.RateDiaryRequestDTO request){
+    @Operation(summary = "평가일지 작성 API", description = "평가일지 작성")
+    public ApiResponse<RateDiaryDto.RateDiaryWriteResponseDTO> Write(@RequestBody @Valid RateDiaryDto.RateDiaryWriteRequestDTO request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        RateDiaryDto.RateDiaryResponseDTO rateDiary = rateDiaryService.writeDiary(request, memberId);
+        RateDiaryDto.RateDiaryWriteResponseDTO rateDiary = rateDiaryService.writeDiary(request, memberId);
         return ApiResponse.onSuccess(rateDiary);
     }
+
+
+//    @PostMapping("/check")
+//    @Operation(summary = "평가일지 조회 API", description = "평가일지 조회")
+//    public ApiResponse<RateDiaryDto.RateDiaryCheckResponseDTO> Check(@RequestBody @Valid RateDiaryDto.RateDiaryCheckRequestDTO request) {
+//        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+//        RateDiaryDto.RateDiaryCheckResponseDTO rateDiary = rateDiaryService.checkRateDiary(request, memberId);
+//
+//        return null;
+//    }
 }

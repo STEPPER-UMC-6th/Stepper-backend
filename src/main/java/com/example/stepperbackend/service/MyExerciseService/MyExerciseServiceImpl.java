@@ -3,6 +3,7 @@ package com.example.stepperbackend.service.MyExerciseService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
 import com.example.stepperbackend.apiPayload.exception.handler.ExerciseHandler;
+import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
@@ -10,8 +11,6 @@ import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
 import com.example.stepperbackend.web.dto.MyExerciseDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
-import org.hibernate.tool.schema.spi.ExceptionHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class MyExerciseServiceImpl implements MyExerciseService {
 
     public MyExerciseDto.AddExerciseResponseDTO addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberEmail) {
             Member member = memberRepository.findByEmail(memberEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("User not found" + memberEmail));
+                    .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
                 MyExercise myExercise = MyExerciseConverter.toAddExerciseEntity(request, member);
                 myExerciseRepository.save(myExercise);
