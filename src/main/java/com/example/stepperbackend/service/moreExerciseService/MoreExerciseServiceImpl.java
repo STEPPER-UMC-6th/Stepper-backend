@@ -45,6 +45,5 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
             throw new ExerciseHandler(ErrorStatus.MORE_EXERCISE_NOT_FOUND);
         }
         return moreExerciseList.stream().map(MoreExerciseConverter::toDto).collect(Collectors.toList());
-
     }
 }

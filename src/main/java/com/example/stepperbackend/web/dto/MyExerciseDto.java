@@ -37,6 +37,7 @@ public class MyExerciseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CheckExerciseResponseDTO {
+        private Long exerciseId;
         private String url;
         private String video_title;
         private String video_image;
