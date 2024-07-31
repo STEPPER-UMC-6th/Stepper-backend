@@ -97,4 +97,17 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
 
         return ExerciseCardConverter.toDto(newExerciseCard, exerciseStepList);
     }
+
+    @Override
+    public List<ExerciseCardDto.ExerciseCardStatusResponseDto> getExerciseStatusByMonth(int month, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        List<ExerciseCard> exerciseCardList = exerciseCardRepository.findAllByMemberAndMonth(member, month);
+
+        if(exerciseCardList.isEmpty()){
+            throw new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND);
+        }
+        return exerciseCardList.stream().map(ExerciseCardConverter::toStatusResponseDto).collect(Collectors.toList());
+    }
 }
