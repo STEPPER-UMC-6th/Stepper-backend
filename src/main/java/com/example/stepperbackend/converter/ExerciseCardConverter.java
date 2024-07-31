@@ -55,4 +55,11 @@ public class ExerciseCardConverter {
         existingExerciseCard.setBodyPart(BodyPart.valueOf(dto.getBodyPart()));
         return existingExerciseCard;
     }
+
+    public static ExerciseCardDto.ExerciseCardStatusResponseDto toStatusResponseDto(ExerciseCard exerciseCard) {
+        return ExerciseCardDto.ExerciseCardStatusResponseDto.builder()
+                .date(exerciseCard.getDate())
+                .status(exerciseCard.isStatus())
+                .build();
+    }
 }
