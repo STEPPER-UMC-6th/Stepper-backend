@@ -36,7 +36,7 @@ public class ExerciseCardController {
 
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
-        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.getExerciseCardDetail(exerciseId, email);
+        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.getExerciseCardDetail(exerciseId);
         return ApiResponse.onSuccess(response);
     }
 

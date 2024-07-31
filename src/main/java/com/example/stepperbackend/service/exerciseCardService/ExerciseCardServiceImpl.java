@@ -60,9 +60,7 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
     }
 
     @Override
-    public ExerciseCardDto.ExerciseCardResponseDto getExerciseCardDetail(Long exerciseId, String email) {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+    public ExerciseCardDto.ExerciseCardResponseDto getExerciseCardDetail(Long exerciseId) {
 
         ExerciseCard exerciseCard = exerciseCardRepository.findById(exerciseId)
                 .orElseThrow(() -> new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND));
