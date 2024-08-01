@@ -24,7 +24,7 @@ public class ExerciseStep {
     @JoinColumn(name = "exercise_card_id")
     private ExerciseCard exerciseCard;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "my_exercise_id")
     private MyExercise myExercise;
 
