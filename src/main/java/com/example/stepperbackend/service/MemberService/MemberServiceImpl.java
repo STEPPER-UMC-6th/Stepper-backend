@@ -43,4 +43,30 @@ public class MemberServiceImpl implements MemberService {
             throw new RuntimeException("Member not found");
         }
     }
+
+    @Override
+    public MemberDto.MemberResponseDto getMemberInfo(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent()) {
+            Member memberEntity = member.get();
+            return MemberDto.MemberResponseDto.builder()
+                    .id(memberEntity.getId())
+                    .name(memberEntity.getName())
+                    .nickName(memberEntity.getNickName())
+                    .email(memberEntity.getEmail())
+                    .profileImage(memberEntity.getProfileImage())
+                    .height(memberEntity.getHeight())
+                    .weight(memberEntity.getWeight())
+                    .communityAlarm(memberEntity.isCommunityAlarm())
+                    .exerciseAlarm(memberEntity.isExerciseAlarm())
+                    .emailAgree(memberEntity.isEmailAgree())
+                    .useAgree(memberEntity.isUseAgree())
+                    .perAgree(memberEntity.isPerAgree())
+//                    .createdAt(memberEntity.getCreatedAt())
+//                    .updatedAt(memberEntity.getUpdatedAt())
+                    .build();
+        } else {
+            throw new RuntimeException("Member not found");
+        }
+    }
 }
