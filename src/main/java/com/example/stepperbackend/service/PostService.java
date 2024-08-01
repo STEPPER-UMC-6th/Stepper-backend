@@ -2,13 +2,14 @@ package com.example.stepperbackend.service;
 
 import com.example.stepperbackend.domain.Post;
 import com.example.stepperbackend.web.dto.PostDto;
-import com.example.stepperbackend.domain.Post;
-import com.example.stepperbackend.web.dto.PostDto.PostRequestDto;
 import com.example.stepperbackend.web.dto.PostDto.PostResponseDto;
 import com.example.stepperbackend.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,4 +30,12 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("No post found with ID: " + postId));
         return new PostResponseDto(post.getId(), post.getTitle(), post.getContent(), post.getAuthorId(), post.getCreatedAt());
     }
+
+    /*
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getPosts() {
+        return postRepository.findAll().stream()
+                .map(post -> new PostResponseDto(post.getId(), post.getTitle(), post.getContent(), post.getAuthorId(), post.getCreatedAt()))
+                .collect(Collectors.toList());
+    }*/
 }

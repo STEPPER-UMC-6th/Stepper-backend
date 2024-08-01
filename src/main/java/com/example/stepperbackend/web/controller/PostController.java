@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/community")
 @RequiredArgsConstructor
@@ -28,4 +30,12 @@ public class PostController {
         PostResponseDto responseDto = postService.getPost(postId);
         return ResponseEntity.ok(responseDto);
     }
-}
+/*
+    //게시글 전체 목록 조회
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostResponseDto>> getPosts(){
+        List<PostResponseDto> posts = postService.getPosts();
+        return ResponseEntity.ok(posts);
+        }*/
+    }
+
