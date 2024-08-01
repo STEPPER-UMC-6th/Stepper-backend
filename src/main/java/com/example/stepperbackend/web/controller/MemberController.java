@@ -77,6 +77,7 @@ public class MemberController {
         return ApiResponse.onSuccess(null);
     }
 
+    @Operation(summary = "회원 탈퇴 API", description = "사용자 탈퇴")
     @DeleteMapping("/delete")
     public ApiResponse<Void> deleteMember(HttpServletRequest request) {
         try {
@@ -93,16 +94,27 @@ public class MemberController {
         }
     }
 
-//
-//    @GetMapping("/{memberId}")
-//    public ResponseEntity<MemberDto.MemberResponseDto> getUserInfo(@PathVariable Long memberId) {
-//        MemberDto.MemberResponseDto response = memberService.getUserInfo(memberId);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @DeleteMapping("/{memberId}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable Long memberId, @RequestBody String password) {
-//        memberService.deleteUser(memberId, password);
-//        return ResponseEntity.noContent().build();
-//    }
+    @Operation(summary = "회원 정보 조회 API", description = "사용자 회원 정보 조회")
+    @GetMapping("/info")
+    public ApiResponse<MemberDto.MemberResponseDto> getMemberInfo(HttpServletRequest request) {
+        try {
+            String authorizationHeader = request.getHeader("Authorization");
+            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                return ApiResponse.onFailure("AUTH_ERROR", "Authorization header missing or invalid", null);
+            }
+
+            String token = authorizationHeader.substring(7);
+            String email = jwtUtil.getUsername(token);
+
+            if (email == null) {
+                return ApiResponse.onFailure("AUTH_ERROR", "Invalid JWT token", null);
+            }
+
+            MemberDto.MemberResponseDto memberInfo = memberService.getMemberInfo(email);
+            return ApiResponse.onSuccess(memberInfo);
+        } catch (Exception e) {
+            log.error("회원 정보 조회 실패", e);
+            return ApiResponse.onFailure("INFO_ERROR", "Failed to retrieve member info", null);
+        }
+    }
 }

@@ -1,11 +1,17 @@
 package com.example.stepperbackend.web.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 public class MemberDto {
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     @Data
     public static class MemberResponseDto {
         private Long id;
