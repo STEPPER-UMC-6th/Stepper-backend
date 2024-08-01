@@ -2,6 +2,7 @@ package com.example.stepperbackend.web.controller;
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
 import com.example.stepperbackend.domain.MyExercise;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.service.MyExerciseService.MyExerciseService;
 import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.web.dto.MyExerciseDto;
@@ -32,7 +33,7 @@ public class MyExerciseController {
 
     @GetMapping("/check")
     @Operation(summary = "나만의 운동 조회 API", description = "나만의 운동 조회")
-    public ApiResponse<List<MyExerciseDto.CheckExerciseResponseDTO>> check(@RequestBody @Valid MyExerciseDto.CheckExerciseRequestDto request) {
+    public ApiResponse<List<MyExerciseDto.CheckExerciseResponseDTO>> check(@RequestParam @Valid BodyPart request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         List<MyExercise> myExercise = myExerciseService.checkMyExercise(request, memberId);

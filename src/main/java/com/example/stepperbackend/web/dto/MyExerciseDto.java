@@ -28,7 +28,7 @@ public class MyExerciseDto {
 
     @Getter
     public static class CheckExerciseRequestDto {
-        private String body_part;
+        private BodyPart body_part;
     }
 
 
