@@ -40,4 +40,13 @@ public class ExerciseCardDto {
         private BodyPart bodyPart;
         private List<ExerciseStepDto.ExerciseStepResponseDto> setpList;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ExerciseCardStatusResponseDto {
+        private LocalDate date;
+        private boolean status;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/exercise")
+@RequestMapping("/api/more-exercise")
 @RequiredArgsConstructor
 public class MoreExerciseController {
 
@@ -24,7 +24,7 @@ public class MoreExerciseController {
 
 
     @Operation(summary = "추가 운동 기록 API",description = "추가 운동 기록")
-    @PostMapping("/more")
+    @PostMapping("/add")
     public ApiResponse<MoreExerciseDto.MoreExerciseResponseDto> exerciseAdd(@RequestBody MoreExerciseDto.MoreExerciseRequestDto dto, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").substring(7);
@@ -34,7 +34,7 @@ public class MoreExerciseController {
     }
 
     @Operation(summary = "추가 운동 기록 조회 API",description = "추가 운동 기록 조회")
-    @GetMapping("/more")
+    @GetMapping("")
     public ApiResponse<List<MoreExerciseDto.MoreExerciseResponseDto>> getMoreExercise(@RequestParam LocalDate date, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").substring(7);

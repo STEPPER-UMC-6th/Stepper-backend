@@ -1,11 +1,15 @@
 package com.example.stepperbackend.service.MyExerciseService;
 
 
+import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.ExerciseHandler;
+import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
+import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
-import com.example.stepperbackend.web.dto.MyExercise.MyExerciseRequestDTO;
+import com.example.stepperbackend.web.dto.MyExerciseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,29 +21,30 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     private final MyExerciseRepository myExerciseRepository;
     private final MemberRepository memberRepository;
 
-    public MyExercise addMyExercise(MyExerciseRequestDTO.AddExerciseDto request, String memberEmail) {
+    public MyExerciseDto.AddExerciseResponseDTO addMyExercise(MyExerciseDto.AddExerciseRequestDto request, String memberEmail) {
             Member member = memberRepository.findByEmail(memberEmail)
-                    .orElseThrow(() -> new IllegalArgumentException("User not found" + memberEmail));
+                    .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
-                MyExercise myExercise = MyExercise.builder()
-                        .url(request.getUrl())
-                        .channel_name(request.getChannel_name())
-                        .video_image(request.getVideo_image())
-                        .video_title(request.getVideo_title())
-                        .body_part(request.getBody_part())
-                        .member(member)
-                        .build();
+                MyExercise myExercise = MyExerciseConverter.toAddExerciseEntity(request, member);
+                myExerciseRepository.save(myExercise);
 
-                return myExerciseRepository.save(myExercise);
+                return MyExerciseConverter.toAddExerciseDTO(myExercise);
 
     }
 
-    public List<MyExercise> checkMyExercise(MyExerciseRequestDTO.CheckExerciseDto request, String memberEmail) {
+
+    public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
-        return exercises.stream()
-                .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part()) &&
-                        myExercise.getMember().getEmail().equals(memberEmail))
-                .toList();
+                List<MyExercise> filteredList = exercises.stream()
+                        .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
+                                myExercise.getMember().getEmail().equals(memberEmail)).toList();
+
+                if(filteredList.isEmpty()){
+                    throw new ExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND);
+                }
+
+        return filteredList;
+
     }
 }
