@@ -51,4 +51,15 @@ public class ExerciseCardController {
         List<ExerciseCardDto.ExerciseCardStatusResponseDto> response = exerciseCardService.getExerciseStatusByMonth(month, email);
         return ApiResponse.onSuccess(response);
     }
+
+    @Operation(summary = "운동 부위에 따른 작성된 카드 날짜 반환 API", description = "운동 부위의 운동 카드 요일 조희")
+    @PostMapping("/check-date")
+    public ApiResponse<List<ExerciseCardDto.ExerciseCardWeekResponseDto>> getExerciseCardWeek(@RequestParam("bodyPart") String bodyPart, HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        List<ExerciseCardDto.ExerciseCardWeekResponseDto> response = exerciseCardService.getExerciseCardWeek(bodyPart, email);
+        return ApiResponse.onSuccess(response);
+    }
+
 }

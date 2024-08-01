@@ -13,4 +13,6 @@ public interface ExerciseCardService {
     ExerciseCardDto.ExerciseCardResponseDto editExerciseCard(Long exerciseId, ExerciseCardDto.ExerciseCardRequestDto request);
 
     List<ExerciseCardDto.ExerciseCardStatusResponseDto> getExerciseStatusByMonth(int month, String email);
+
+    List<ExerciseCardDto.ExerciseCardWeekResponseDto> getExerciseCardWeek(String bodyPart, String email);
 }
