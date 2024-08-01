@@ -10,6 +10,7 @@ import com.example.stepperbackend.domain.ExerciseCard;
 import com.example.stepperbackend.domain.ExerciseStep;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.repository.ExerciseCardRepository;
 import com.example.stepperbackend.repository.ExerciseStepRepository;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -105,23 +106,24 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
         List<ExerciseCard> exerciseCardList = exerciseCardRepository.findAllByMemberAndMonth(member, month);
 
-        if(exerciseCardList.isEmpty()){
+        if (exerciseCardList.isEmpty()) {
             throw new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND);
         }
         return exerciseCardList.stream().map(ExerciseCardConverter::toStatusResponseDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<ExerciseCardDto.ExerciseCardWeekResponseDto> getExerciseCardWeek(String bodyPart, String email) {
+    public List<ExerciseCardDto.ExerciseCardWeekResponseDto> getExerciseCardWeek(BodyPart bodyPart, String email) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
-        List<ExerciseCard> exerciseCards = exerciseCardRepository.findByBodyPartAndEmail(bodyPart, member);
+
+        List<ExerciseCard> exerciseCards = exerciseCardRepository.findByBodyPartAndMember(bodyPart, member);
         List<LocalDate> dates = exerciseCards.stream()
                 .map(ExerciseCard::getDate)
                 .collect(Collectors.toList());
 
         return List.of(ExerciseCardDto.ExerciseCardWeekResponseDto.builder()
-                .bodyPart(bodyPart)
+                .bodyPart(bodyPart.name())
                 .dates(dates)
                 .build());
     }
