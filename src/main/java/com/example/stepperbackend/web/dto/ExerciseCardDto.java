@@ -38,7 +38,8 @@ public class ExerciseCardDto {
         private int second;
         private String materials;
         private BodyPart bodyPart;
-        private List<ExerciseStepDto.ExerciseStepResponseDto> setpList;
+
+        private List<ExerciseStepDto.ExerciseStepResponseDto> stepList;
     }
 
     @Builder
@@ -48,5 +49,21 @@ public class ExerciseCardDto {
     public static class ExerciseCardStatusResponseDto {
         private LocalDate date;
         private boolean status;
+    }
+
+    @Getter
+    public static class ToDayExerciseRequestDto{
+        private LocalDate date;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ToDayExerciseResponseDto {
+        private Long id;
+        private BodyPart bodyPart;
+
+        private List<ExerciseStepDto.ExerciseStepResponseDto> stepList;
     }
 }
