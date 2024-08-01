@@ -2,9 +2,9 @@ spring:
   jwt:
     secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
   datasource:
-    url: jdbc:mysql://hojundb.cd8qcimkew4w.ap-northeast-2.rds.amazonaws.com:3306/stepper
-    username: root
-    password: x9547029
+    url: 111
+    username: 111
+    password: 111
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
@@ -17,5 +17,5 @@ spring:
         format_sql: true
         use_sql_comments: true
         hbm2ddl:
-          auto: create
+          auto: update
         default_batch_fetch_size: 1000${}
