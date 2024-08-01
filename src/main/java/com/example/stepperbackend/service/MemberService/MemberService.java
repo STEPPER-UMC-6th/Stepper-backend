@@ -9,4 +9,6 @@ public interface MemberService {
     MemberDto.MemberResponseDto signup(MemberDto.MemberSignupRequestDto dto);
 
     void deleteMember(String email);
+
+    MemberDto.MemberResponseDto getMemberInfo(String email);
 }
