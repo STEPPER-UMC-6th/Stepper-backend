@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class CommentDto {
-
+//
     @Getter
     @NoArgsConstructor
     public static class CommentRequestDto {
