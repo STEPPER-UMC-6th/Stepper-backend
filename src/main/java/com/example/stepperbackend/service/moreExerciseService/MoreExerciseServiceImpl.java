@@ -15,6 +15,7 @@ import com.example.stepperbackend.repository.BadgeRepository;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MoreExerciseRepository;
 import com.example.stepperbackend.converter.MoreExerciseConverter;
+import com.example.stepperbackend.service.badgeService.BadgeService;
 import com.example.stepperbackend.web.dto.MoreExerciseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
 
     final MemberRepository memberRepository;
     final MoreExerciseRepository moreExerciseRepository;
-    final BadgeCategoryRepository badgeCategoryRepository;
-    final BadgeRepository badgeRepository;
+
+    final BadgeService badgeService;
 
     @Override
     public MoreExerciseDto.MoreExerciseResponseDto exerciseAdd(MoreExerciseDto.MoreExerciseRequestDto dto, String email) {
@@ -43,10 +44,7 @@ public class MoreExerciseServiceImpl implements MoreExerciseService {
 
         // 첫 추가 운동 완료
         if(moreExerciseRepository.getCountByMember(member) == 1) {
-            BadgeCategory badgeCategory = badgeCategoryRepository.findById(1L)
-                    .orElseThrow(() -> new BadgeHandler(ErrorStatus.BADGE_CATEGORY_NOT_FOUND));
-            Badge badge = BadgeConverter.toEntity("첫 추가 운동 완료", member, badgeCategory);
-            badgeRepository.save(badge);
+            badgeService.putFirstBadge("첫 추가 운동 완료", member);
         }
         return MoreExerciseConverter.toDto(moreExercise);
     }

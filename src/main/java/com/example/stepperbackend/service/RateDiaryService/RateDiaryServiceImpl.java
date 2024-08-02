@@ -7,6 +7,7 @@ import com.example.stepperbackend.converter.RateDiaryConverter;
 import com.example.stepperbackend.domain.*;
 import com.example.stepperbackend.domain.mapping.Badge;
 import com.example.stepperbackend.repository.*;
+import com.example.stepperbackend.service.badgeService.BadgeService;
 import com.example.stepperbackend.web.dto.RateDiaryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class RateDiaryServiceImpl implements RateDiaryService {
     private final MemberRepository memberRepository;
     private final RateDiaryRepository rateDiaryRepository;
     private final ExerciseCardRepository exerciseCardRepository;
-    private final BadgeCategoryRepository badgeCategoryRepository;
-    private final BadgeRepository badgeRepository;
+
+    private final BadgeService badgeService;
 
     public RateDiaryDto.RateDiaryWriteResponseDTO writeDiary(RateDiaryDto.RateDiaryWriteRequestDTO request, String memberEmail) {
         Member member = memberRepository.findByEmail(memberEmail)
@@ -40,15 +41,13 @@ public class RateDiaryServiceImpl implements RateDiaryService {
         RateDiary rateDiary = RateDiaryConverter.toEntity(request, exerciseCard, member);
         rateDiaryRepository.save(rateDiary);
 
-        // 첫 운동 완료
         exerciseCard.setStatus(true);
 
+        // 첫 오늘의 운동 완료
         if(exerciseCardRepository.getCountTureStatusByMember(member) == 1) {
-            BadgeCategory badgeCategory = badgeCategoryRepository.findById(1L)
-                            .orElseThrow(() -> new BadgeHandler(ErrorStatus.BADGE_CATEGORY_NOT_FOUND));
-            Badge badge = BadgeConverter.toEntity("첫 오늘의 운동 완료", member, badgeCategory);
-            badgeRepository.save(badge);
+            badgeService.putFirstBadge("첫 오늘의 운동 완료", member);
         }
+
         return RateDiaryConverter.toDto(rateDiary);
     }
 
