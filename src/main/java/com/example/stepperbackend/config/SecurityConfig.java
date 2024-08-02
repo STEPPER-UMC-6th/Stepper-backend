@@ -63,12 +63,13 @@ public class SecurityConfig {
                         .requestMatchers("/", "/login", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/MyExercise/**").permitAll()
                         .requestMatchers("/api/members/**").permitAll()
+                        .requestMatchers("/health").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated());
 
         http
-                .addFilterBefore(new JWTFilter(jwtUtil),  UsernamePasswordAuthenticationFilter.class);//LoginFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);//LoginFilter.class);
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
 //        http
@@ -81,7 +82,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
 
 }
