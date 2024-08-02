@@ -1,21 +1,22 @@
 package com.example.stepperbackend.service.exerciseCardService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.BadgeHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.ExerciseCardHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MyExerciseHandler;
+import com.example.stepperbackend.converter.BadgeConverter;
 import com.example.stepperbackend.converter.ExerciseCardConverter;
 import com.example.stepperbackend.converter.ExerciseStepConverter;
-import com.example.stepperbackend.domain.ExerciseCard;
-import com.example.stepperbackend.domain.ExerciseStep;
-import com.example.stepperbackend.domain.Member;
-import com.example.stepperbackend.domain.MyExercise;
+import com.example.stepperbackend.domain.*;
 import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.domain.enums.Week;
+import com.example.stepperbackend.domain.mapping.Badge;
 import com.example.stepperbackend.repository.ExerciseCardRepository;
 import com.example.stepperbackend.repository.ExerciseStepRepository;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
+import com.example.stepperbackend.service.badgeService.BadgeService;
 import com.example.stepperbackend.web.dto.ExerciseCardDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
     final ExerciseCardRepository exerciseCardRepository;
     final ExerciseStepRepository exerciseStepRepository;
     final MyExerciseRepository myExerciseRepository;
+
+    final BadgeService badgeService;
 
     @Override
     public ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto request, String email) {
@@ -58,6 +61,11 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
                 .collect(Collectors.toList());
 
         exerciseCard.setExerciseStepList(exerciseStepList);
+
+        // 첫 운동 카드 설정 완료
+        if(exerciseCardRepository.getCountByMember(member) == 1){
+            badgeService.putFirstBadge("첫 운동 설정 완료", member);
+        }
 
         return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
     }

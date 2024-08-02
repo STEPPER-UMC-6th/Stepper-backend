@@ -22,4 +22,9 @@ public interface ExerciseCardRepository extends JpaRepository<ExerciseCard, Long
     @Query("SELECT e FROM ExerciseCard e WHERE e.member = :member AND e.bodyPart = :bodyPart")
     List<ExerciseCard> findByBodyPartAndMember(@Param("bodyPart") BodyPart bodyPart, @Param("member") Member member);
 
+    @Query("SELECT count(e) FROM ExerciseCard e WHERE e.member = :member AND e.status = true")
+    int getCountTureStatusByMember(@Param("member") Member member);
+
+    @Query("SELECT count(e) FROM ExerciseCard e WHERE e.member = :member")
+    int getCountByMember(@Param("member") Member member);
 }

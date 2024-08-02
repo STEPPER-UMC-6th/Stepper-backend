@@ -5,7 +5,9 @@ import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
 import com.example.stepperbackend.apiPayload.exception.handler.BadgeHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.converter.BadgeConverter;
+import com.example.stepperbackend.domain.BadgeCategory;
 import com.example.stepperbackend.domain.Member;
+import com.example.stepperbackend.domain.mapping.Badge;
 import com.example.stepperbackend.repository.BadgeCategoryRepository;
 import com.example.stepperbackend.repository.BadgeRepository;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -40,4 +42,14 @@ public class badgeServiceImpl implements BadgeService{
         }
         return badgeList;
     }
+
+    @Override
+    public void putFirstBadge(String badgeName, Member member) {
+        BadgeCategory badgeCategory = badgeCategoryRepository.findById(1L)
+                .orElseThrow(() -> new BadgeHandler(ErrorStatus.BADGE_CATEGORY_NOT_FOUND));
+        Badge badge = BadgeConverter.toEntity(badgeName, member, badgeCategory);
+        badgeRepository.save(badge);
+    }
+
+
 }
