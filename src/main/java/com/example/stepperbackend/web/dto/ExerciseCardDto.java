@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -48,5 +49,17 @@ public class ExerciseCardDto {
     public static class ExerciseCardStatusResponseDto {
         private LocalDate date;
         private boolean status;
+    }
+
+    @Data
+    public static class ExerciseCardWeekRequestDto {
+        private String bodyPart;
+    }
+
+    @Data
+    @Builder
+    public static class ExerciseCardWeekResponseDto {
+        private String bodyPart;
+        private List<Week> weeks;
     }
 }

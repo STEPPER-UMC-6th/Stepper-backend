@@ -2,6 +2,7 @@ package com.example.stepperbackend.web.controller;
 
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.jwt.JWTUtil;
 import com.example.stepperbackend.service.exerciseCardService.ExerciseCardService;
 import com.example.stepperbackend.web.dto.ExerciseCardDto;
@@ -49,6 +50,23 @@ public class ExerciseCardController {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
         List<ExerciseCardDto.ExerciseCardStatusResponseDto> response = exerciseCardService.getExerciseStatusByMonth(month, email);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "운동 부위에 따른 작성된 카드 날짜 반환 API", description = "운동 부위의 운동 카드 요일 조회")
+    @GetMapping("/check-date")
+    public ApiResponse<List<ExerciseCardDto.ExerciseCardWeekResponseDto>> getExerciseCardWeek(@RequestParam("bodyPart") String bodyPartStr, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+
+        BodyPart bodyPart;
+        try {
+            bodyPart = BodyPart.valueOf(bodyPartStr.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.onFailure("INVALID_BODY_PART", "Invalid body part: " + bodyPartStr, null);
+        }
+
+        List<ExerciseCardDto.ExerciseCardWeekResponseDto> response = exerciseCardService.getExerciseCardWeek(bodyPart, email);
         return ApiResponse.onSuccess(response);
     }
 }

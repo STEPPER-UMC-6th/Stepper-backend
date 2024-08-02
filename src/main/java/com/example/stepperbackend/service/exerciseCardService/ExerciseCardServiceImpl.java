@@ -10,6 +10,8 @@ import com.example.stepperbackend.domain.ExerciseCard;
 import com.example.stepperbackend.domain.ExerciseStep;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
+import com.example.stepperbackend.domain.enums.BodyPart;
+import com.example.stepperbackend.domain.enums.Week;
 import com.example.stepperbackend.repository.ExerciseCardRepository;
 import com.example.stepperbackend.repository.ExerciseStepRepository;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,9 +107,27 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
         List<ExerciseCard> exerciseCardList = exerciseCardRepository.findAllByMemberAndMonth(member, month);
 
-        if(exerciseCardList.isEmpty()){
+        if (exerciseCardList.isEmpty()) {
             throw new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND);
         }
         return exerciseCardList.stream().map(ExerciseCardConverter::toStatusResponseDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExerciseCardDto.ExerciseCardWeekResponseDto> getExerciseCardWeek(BodyPart bodyPart, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        List<ExerciseCard> exerciseCards = exerciseCardRepository.findByBodyPartAndMember(bodyPart, member);
+        List<Week> weeks = exerciseCards.stream()
+                .map(ExerciseCard::getDate)
+                .map(date -> Week.valueOf(date.getDayOfWeek().name()))
+                .distinct()
+                .collect(Collectors.toList());
+
+        return List.of(ExerciseCardDto.ExerciseCardWeekResponseDto.builder()
+                .bodyPart(bodyPart.name())
+                .weeks(weeks)
+                .build());
     }
 }
