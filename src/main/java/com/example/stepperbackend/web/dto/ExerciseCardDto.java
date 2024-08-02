@@ -60,6 +60,6 @@ public class ExerciseCardDto {
     @Builder
     public static class ExerciseCardWeekResponseDto {
         private String bodyPart;
-        private List<LocalDate> dates;
+        private List<Week> weeks;
     }
 }

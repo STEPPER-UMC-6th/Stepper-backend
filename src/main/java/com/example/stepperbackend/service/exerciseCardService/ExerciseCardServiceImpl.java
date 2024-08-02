@@ -11,6 +11,7 @@ import com.example.stepperbackend.domain.ExerciseStep;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
 import com.example.stepperbackend.domain.enums.BodyPart;
+import com.example.stepperbackend.domain.enums.Week;
 import com.example.stepperbackend.repository.ExerciseCardRepository;
 import com.example.stepperbackend.repository.ExerciseStepRepository;
 import com.example.stepperbackend.repository.MemberRepository;
@@ -118,13 +119,15 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
         List<ExerciseCard> exerciseCards = exerciseCardRepository.findByBodyPartAndMember(bodyPart, member);
-        List<LocalDate> dates = exerciseCards.stream()
+        List<Week> weeks = exerciseCards.stream()
                 .map(ExerciseCard::getDate)
+                .map(date -> Week.valueOf(date.getDayOfWeek().name()))
+                .distinct()
                 .collect(Collectors.toList());
 
         return List.of(ExerciseCardDto.ExerciseCardWeekResponseDto.builder()
                 .bodyPart(bodyPart.name())
-                .dates(dates)
+                .weeks(weeks)
                 .build());
     }
 }

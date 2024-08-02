@@ -68,6 +68,5 @@ public class ExerciseCardController {
 
         List<ExerciseCardDto.ExerciseCardWeekResponseDto> response = exerciseCardService.getExerciseCardWeek(bodyPart, email);
         return ApiResponse.onSuccess(response);
-
     }
 }

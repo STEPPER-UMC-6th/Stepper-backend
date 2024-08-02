@@ -19,11 +19,6 @@ public interface ExerciseCardRepository extends JpaRepository<ExerciseCard, Long
     @Query("SELECT e FROM ExerciseCard e WHERE e.member = :member AND MONTH(e.date) = :month")
     List<ExerciseCard> findAllByMemberAndMonth(@Param("member") Member member, @Param("month") int month);
 
-//    @Query("SELECT e FROM ExerciseCard e WHERE e.member = :member AND e.bodyPart = :bodyPart")
-//    List<ExerciseCard> findByBodyPartAndEmail(@Param("bodyPart") BodyPart bodyPart, @Param("member") Member member);
-//
-//    List<ExerciseCard> findByBodyPartAndMember(BodyPart bodyPart, Member member);
-
     @Query("SELECT e FROM ExerciseCard e WHERE e.member = :member AND e.bodyPart = :bodyPart")
     List<ExerciseCard> findByBodyPartAndMember(@Param("bodyPart") BodyPart bodyPart, @Param("member") Member member);
 
