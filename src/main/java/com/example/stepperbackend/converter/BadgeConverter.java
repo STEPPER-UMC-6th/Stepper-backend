@@ -1,6 +1,7 @@
 package com.example.stepperbackend.converter;
 
 import com.example.stepperbackend.domain.BadgeCategory;
+import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.mapping.Badge;
 import com.example.stepperbackend.web.dto.BadgeDto;
 
@@ -26,6 +27,14 @@ public class BadgeConverter {
                 .id(badgeCategory.getId())
                 .categoryName(badgeCategory.getName())
                 .list(badgeDtoList)
+                .build();
+    }
+
+    public static Badge toEntity(String name, Member member, BadgeCategory category) {
+        return Badge.builder()
+                .badgeName(name)
+                .member(member)
+                .badgeCategory(category)
                 .build();
     }
 
