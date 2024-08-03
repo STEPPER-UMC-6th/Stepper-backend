@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/community")
 @RequiredArgsConstructor
 public class PostController {
 
@@ -21,7 +21,7 @@ public class PostController {
     private final PostService postService;
 
     @Operation(summary = "게시글 작성 API", description = "사용자 게시글 작성")
-    @PostMapping("/create")
+    @PostMapping("/write")
     public ApiResponse<PostDto.PostResponseDto> createPost(@RequestBody PostDto.PostRequestDto postRequestDto, HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
