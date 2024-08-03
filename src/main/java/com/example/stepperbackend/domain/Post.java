@@ -32,4 +32,8 @@ public class Post extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private SubCategory subCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "weekly_mission_id")
+    private WeeklyMission weeklyMission;
 }
