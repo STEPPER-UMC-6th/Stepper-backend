@@ -57,6 +57,17 @@ public class ExerciseCardController {
         return ApiResponse.onSuccess(response);
     }
 
+    @Operation(summary = "운동 카드 수정 API", description = "운동 카드 수정")
+    @PutMapping("/{exerciseId}/edit")
+    public ApiResponse<ExerciseCardDto.ExerciseCardResponseDto> editExerciseCard(@PathVariable(name="exerciseId") Long exerciseId, @RequestBody ExerciseCardDto.ExerciseCardRequestDto dto, HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.editExerciseCard(exerciseId, dto);
+        return ApiResponse.onSuccess(response);
+
+    }
+
     @Operation(summary = "오늘의 운동 진행상태 조회 API", description = "오늘의 운동 진행상태 조회")
     @GetMapping("/today")
     public ApiResponse<List<ExerciseCardDto.ToDayExerciseResponseDto>> getToDayExercise(@RequestParam("date") LocalDate date) {
