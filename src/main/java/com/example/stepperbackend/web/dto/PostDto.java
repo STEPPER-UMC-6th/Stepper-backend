@@ -15,6 +15,7 @@ public class PostDto {
         private String body;
         private Long categoryId;
         private SubCategory subCategory;
+        private Long weeklyMissionId;
     }
 
     @Data
@@ -27,6 +28,7 @@ public class PostDto {
         private String authorEmail;
         private Long categoryId;
         private SubCategory subCategory;
+        private String weeklyMissionTitle;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
