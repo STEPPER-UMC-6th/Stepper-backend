@@ -13,6 +13,10 @@ import com.example.stepperbackend.converter.PostConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -36,6 +40,15 @@ public class PostServiceImpl implements PostService {
         post = postRepository.save(post);
 
         return PostConverter.toDto(post);
+    }
+
+    @Override
+    public List<PostDto.PostResponseDto> getPostsList(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        List<Post> postList = postRepository.findAllByMember(member);
+
+        return postList.stream().map(PostConverter::toDto).collect(Collectors.toList());
     }
 }
 
