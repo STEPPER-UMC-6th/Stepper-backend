@@ -18,6 +18,7 @@ public class ExerciseStepDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ExerciseStepResponseDto {
+        private Long stepId;
         private int step;
         private boolean step_status;
         private MyExerciseDto.CheckExerciseResponseDTO myExercise;

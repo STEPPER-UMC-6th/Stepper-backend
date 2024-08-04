@@ -22,7 +22,9 @@ public class ExerciseStepConverter {
         MyExerciseDto.CheckExerciseResponseDTO myExerciseDto = MyExerciseConverter.toCheckExerciseDTO(step.getMyExercise());
 
         return ExerciseStepDto.ExerciseStepResponseDto.builder()
+                .stepId(step.getId())
                 .step(step.getStep())
+                .step_status(step.isStepStatus())
                 .myExercise(myExerciseDto)
                 .build();
     }

@@ -111,6 +111,7 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
     }
 
 
+
     @Override
     public List<ExerciseCardDto.ToDayExerciseResponseDto> getTodayExercises(LocalDate date, String memberEmail) {
      Member member = memberRepository.findByEmail(memberEmail)
