@@ -65,6 +65,7 @@ public class ExerciseCardController {
         String email = jwtUtil.getUsername(token);
         ExerciseCardDto.ExerciseCardResponseDto response = exerciseCardService.editExerciseCard(exerciseId, dto);
         return ApiResponse.onSuccess(response);
+
     }
 
     @Operation(summary = "오늘의 운동 진행상태 조회 API", description = "오늘의 운동 진행상태 조회")
