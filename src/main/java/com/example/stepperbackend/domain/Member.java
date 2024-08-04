@@ -2,6 +2,7 @@ package com.example.stepperbackend.domain;
 
 import com.example.stepperbackend.domain.common.BaseEntity;
 import com.example.stepperbackend.domain.mapping.Badge;
+import com.example.stepperbackend.domain.mapping.Likes;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -64,5 +65,8 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<RateDiary> rateDiaryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Likes> likesList = new ArrayList<>();
 
 }
