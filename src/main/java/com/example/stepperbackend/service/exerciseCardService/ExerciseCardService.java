@@ -1,6 +1,7 @@
 package com.example.stepperbackend.service.exerciseCardService;
 
 import com.example.stepperbackend.domain.ExerciseCard;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.web.dto.ExerciseCardDto;
 
 import java.time.LocalDate;
@@ -17,4 +18,7 @@ public interface ExerciseCardService {
     List<ExerciseCardDto.ExerciseCardStatusResponseDto> getExerciseStatusByMonth(int month, String email);
 
     List<ExerciseCardDto.ToDayExerciseResponseDto> getTodayExercises(LocalDate date, String memberEmail);
+
+    List<ExerciseCardDto.ExerciseCardWeekResponseDto> getExerciseCardWeek(BodyPart bodyPart, String email);
+
 }
