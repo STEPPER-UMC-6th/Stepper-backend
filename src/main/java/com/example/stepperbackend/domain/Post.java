@@ -3,6 +3,7 @@ package com.example.stepperbackend.domain;
 import com.example.stepperbackend.domain.common.BaseEntity;
 import com.example.stepperbackend.domain.enums.SubCategory;
 import com.example.stepperbackend.domain.mapping.Scrap;
+import com.example.stepperbackend.domain.mapping.Likes;
 import jakarta.persistence.Entity;
 import lombok.*;
 import jakarta.persistence.*;
@@ -42,5 +43,9 @@ public class Post extends BaseEntity {
     private WeeklyMission weeklyMission;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Likes> likesList = new ArrayList<>();
+  
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Scrap> scrapList = new ArrayList<>();
+
 }
