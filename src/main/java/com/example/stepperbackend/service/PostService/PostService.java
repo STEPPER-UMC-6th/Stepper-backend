@@ -10,5 +10,5 @@ public interface PostService {
 
     List<PostDto.PostResponseDto> getPostsList(String email);
 
-
+    PostDto.PostResponseDto getPost(Long postId);
 }

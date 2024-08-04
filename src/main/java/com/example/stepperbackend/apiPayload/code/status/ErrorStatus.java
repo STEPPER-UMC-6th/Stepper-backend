@@ -36,7 +36,11 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // rate_diary
     EXERCISE_CARD_DOES_NOT_BELONG_TO_USER(HttpStatus.BAD_REQUEST, "RATE_DIARY4001", "운동 카드가 유저의 것이 아닙니다."),
-    RATE_DIARY_NOT_FOUND(HttpStatus.BAD_REQUEST, "RATE_DIARY4001", "평가 일지를 찾을 수 없습니다.");
+    RATE_DIARY_NOT_FOUND(HttpStatus.BAD_REQUEST, "RATE_DIARY4001", "평가 일지를 찾을 수 없습니다."),
+
+    //post
+    MY_POST_LIST_NOT_FOUND(HttpStatus.BAD_REQUEST, "POST_LIST4001", "내 글 목록을 찾을 수 없습니다.");
+
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;

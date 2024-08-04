@@ -2,6 +2,7 @@ package com.example.stepperbackend.service.PostService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
+import com.example.stepperbackend.apiPayload.exception.handler.PostHandler;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.Post;
 import com.example.stepperbackend.domain.WeeklyMission;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +50,17 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
         List<Post> postList = postRepository.findAllByMember(member);
 
+        if(postList.isEmpty()) {
+            throw new PostHandler(ErrorStatus.MY_POST_LIST_NOT_FOUND);
+        }
+
         return postList.stream().map(PostConverter::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDto.PostResponseDto getPost(Long postId) {
+        Post post = postRepository.findById(postId).get();
+        return PostConverter.toDto(post);
     }
 }
 

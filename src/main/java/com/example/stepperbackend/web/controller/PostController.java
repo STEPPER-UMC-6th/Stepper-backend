@@ -42,4 +42,13 @@ public class PostController {
         List<PostDto.PostResponseDto> response = postService.getPostsList(email);
         return ApiResponse.onSuccess(response);
     }
+
+    @Operation(summary = "게시글 상세 조회 API", description = "게시글 상세 조회")
+    @GetMapping("/{postId}")
+    public ApiResponse<PostDto.PostResponseDto> getPost(@PathVariable Long postId, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        PostDto.PostResponseDto response = postService.getPost(postId);
+        return ApiResponse.onSuccess(response);
+    }
 }
