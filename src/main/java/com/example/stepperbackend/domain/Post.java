@@ -2,9 +2,13 @@ package com.example.stepperbackend.domain;
 
 import com.example.stepperbackend.domain.common.BaseEntity;
 import com.example.stepperbackend.domain.enums.SubCategory;
+import com.example.stepperbackend.domain.mapping.Scrap;
 import jakarta.persistence.Entity;
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -36,4 +40,7 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weekly_mission_id")
     private WeeklyMission weeklyMission;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Scrap> scrapList = new ArrayList<>();
 }
