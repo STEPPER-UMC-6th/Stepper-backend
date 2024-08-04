@@ -48,10 +48,7 @@ public enum ErrorStatus implements BaseErrorCode {
     LIKE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "LIKE4001", "이미 좋아요를 눌렀습니다."),
 
     // scrap
-    SCRAP_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "SCRAP4001", "이미 스크랩된 게시물입니다."),
-
-    //post
-    POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "POST_4001", "게시글을 찾을 수 없습니다.");
+    SCRAP_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "SCRAP4001", "이미 스크랩된 게시물입니다.");
 
 
     private final HttpStatus httpStatus;
