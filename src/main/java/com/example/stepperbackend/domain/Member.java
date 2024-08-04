@@ -21,6 +21,7 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long id;
 
+    @Setter
     private String name;
 
     private String nickName;
@@ -67,5 +68,11 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Comment> CommentList = new ArrayList<>();
+
+    public static Member createAnonymousMember() {
+        Member member = new Member();
+        member.setName("익명");
+        return member;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.stepperbackend.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class CommentDto {
     public static class CommentRequestDto {
         private Long postId;
         private String content;
+        private boolean anonymous;
     }
 
     @Builder
