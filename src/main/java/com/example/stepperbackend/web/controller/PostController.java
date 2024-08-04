@@ -34,7 +34,7 @@ public class PostController {
     }
 
     @Operation(summary = "내가 작성한 글 조회 API", description = "내가 작성한 글 조회")
-    @GetMapping("/{member_id}/posts")
+    @GetMapping("/my_posts")
     public ApiResponse<List<PostDto.PostResponseDto>> getPostsList(HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").substring(7);
