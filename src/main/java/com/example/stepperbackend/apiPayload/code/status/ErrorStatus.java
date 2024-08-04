@@ -39,8 +39,10 @@ public enum ErrorStatus implements BaseErrorCode {
     RATE_DIARY_NOT_FOUND(HttpStatus.BAD_REQUEST, "RATE_DIARY4001", "평가 일지를 찾을 수 없습니다."),
 
     //exercise_step
-    EXERCISE_STEP_ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "EXERCISE_STEP4001", "스텝 아이디를 찾을 수 없습니다.");
+    EXERCISE_STEP_ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "EXERCISE_STEP4001", "스텝 아이디를 찾을 수 없습니다."),
 
+    //post
+    POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "POST_4001", "게시글을 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;
