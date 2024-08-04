@@ -9,4 +9,5 @@ public class PostHandler extends GeneralException {
     public PostHandler(BaseErrorCode code) {
         super(code);
     }
+
 }

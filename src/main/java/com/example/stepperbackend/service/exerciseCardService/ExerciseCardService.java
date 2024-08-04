@@ -7,6 +7,7 @@ import com.example.stepperbackend.web.dto.ExerciseCardDto;
 import java.time.LocalDate;
 import java.util.List;
 
+
 public interface ExerciseCardService {
 
     ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto dto, String email);
