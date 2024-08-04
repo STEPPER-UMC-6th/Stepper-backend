@@ -14,9 +14,11 @@ import com.example.stepperbackend.repository.ScrapRepository;
 import com.example.stepperbackend.web.dto.ScrapDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ScrapServiceImpl implements ScrapService {
 
     private final MemberRepository memberRepository;
@@ -38,5 +40,18 @@ public class ScrapServiceImpl implements ScrapService {
         Scrap scrap = ScrapConverter.toEntity(member, post);
         scrapRepository.save(scrap);
         return ScrapConverter.toDto(scrap);
+    }
+
+    @Override
+    public void deleteScrap(String email, Long postId) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostHandler(ErrorStatus.POST_NOT_FOUND));
+
+        if(scrapRepository.existsByMemberAndPost(member, post)) {
+            scrapRepository.deleteByMemberAndPost(member, post);
+        }
     }
 }

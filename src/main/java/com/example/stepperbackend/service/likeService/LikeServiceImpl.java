@@ -13,9 +13,11 @@ import com.example.stepperbackend.repository.PostRepository;
 import com.example.stepperbackend.web.dto.LikeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LikeServiceImpl implements LikeService{
 
     private final LikeRepository likeRepository;
@@ -37,5 +39,18 @@ public class LikeServiceImpl implements LikeService{
         Likes likes = LikeConverter.toEntity(member, post);
         likeRepository.save(likes);
         return LikeConverter.toDto(likes);
+    }
+
+    @Override
+    public void deleteLike(String email, Long postId) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostHandler(ErrorStatus.POST_NOT_FOUND));
+
+        if(likeRepository.existsByMemberAndPost(member, post)) {
+            likeRepository.deleteByMemberAndPost(member, post);
+        }
     }
 }

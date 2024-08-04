@@ -36,13 +36,22 @@ public class PostController {
         return ApiResponse.onSuccess(response);
     }
 
-    @Operation(summary = "좋아요 등록 API", description = "사용자 게시글 작성")
+    @Operation(summary = "좋아요 등록 API", description = "게시글 좋아요 등록")
     @PostMapping("/{postId}/like")
     public ApiResponse<LikeDto.likeResponseDto> createLike(@PathVariable(name = "postId") Long postId, HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
         LikeDto.likeResponseDto response = likeService.createLike(email, postId);
         return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "좋아요 취소 API", description = "게시글 좋아요 취소")
+    @DeleteMapping("/{postId}/like")
+    public ApiResponse<String> deleteLike(@PathVariable(name = "postId") Long postId, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        likeService.deleteLike(email, postId);
+        return ApiResponse.onSuccess("좋아요 취소 성공");
     }
   
     @Operation(summary = "스크랩 등록 API", description = "스크랩 등록")
@@ -52,5 +61,14 @@ public class PostController {
         String email = jwtUtil.getUsername(token);
         ScrapDto.ScrapResponseDto response = scrapService.creatScrap(email, postId);
         return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "스크랩 취소 API", description = "게시글 스크랩 취소")
+    @DeleteMapping("/{postId}/scrap")
+    public ApiResponse<String> deleteScrap(@PathVariable(name = "postId") Long postId, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        scrapService.deleteScrap(email, postId);
+        return ApiResponse.onSuccess("스크랩 취소 성공");
     }
 }

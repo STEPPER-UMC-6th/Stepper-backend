@@ -6,4 +6,6 @@ import com.example.stepperbackend.web.dto.ScrapDto;
 public interface ScrapService {
 
     ScrapDto.ScrapResponseDto creatScrap(String email, Long postId);
+
+    void deleteScrap(String email, Long postId);
 }
