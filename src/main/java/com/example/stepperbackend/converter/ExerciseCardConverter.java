@@ -8,6 +8,8 @@ import com.example.stepperbackend.domain.enums.Week;
 import com.example.stepperbackend.web.dto.ExerciseCardDto;
 import com.example.stepperbackend.web.dto.ExerciseStepDto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +43,7 @@ public class ExerciseCardConverter {
                 .second(exerciseCard.getSecond())
                 .materials(exerciseCard.getMaterials())
                 .bodyPart(exerciseCard.getBodyPart())
-                .setpList(exerciseStepList)
+                .stepList(exerciseStepList)
                 .build();
     }
 
@@ -62,4 +64,36 @@ public class ExerciseCardConverter {
                 .status(exerciseCard.isStatus())
                 .build();
     }
+
+
+    public static List<ExerciseCardDto.ToDayExerciseResponseDto> toDayExerciseListDto(List<ExerciseCard> exerciseCardList, List<ExerciseStep> exerciseStepList) {
+
+        // 결과 DTO 리스트 초기화
+        List<ExerciseCardDto.ToDayExerciseResponseDto> responseDtoList = new ArrayList<>();
+
+        // 각 운동 카드에 대해 DTO 생성
+        for (ExerciseCard exerciseCard : exerciseCardList) {
+            // 해당 카드에 대한 운동 단계 필터링
+            List<ExerciseStep> stepsForCard = exerciseStepList.stream()
+                    .filter(step -> step.getExerciseCard().equals(exerciseCard))
+                    .toList();
+
+            // DTO 생성
+            ExerciseCardDto.ToDayExerciseResponseDto responseDto = ExerciseCardDto.ToDayExerciseResponseDto.builder()
+                    .id(exerciseCard.getId())
+                    .bodyPart(exerciseCard.getBodyPart())
+                    .stepList(stepsForCard.stream()
+                            .map(ExerciseStepConverter::toDto)
+                            .collect(Collectors.toList()))
+                    .build();
+
+            // 결과 리스트에 추가
+            responseDtoList.add(responseDto);
+        }
+
+        return responseDtoList;
+    }
 }
+
+
+

@@ -7,6 +7,7 @@ import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.converter.MyExerciseConverter;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.MyExercise;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.MyExerciseRepository;
 import com.example.stepperbackend.web.dto.MyExerciseDto;
@@ -33,18 +34,16 @@ public class MyExerciseServiceImpl implements MyExerciseService {
     }
 
 
-    public List<MyExercise> checkMyExercise(MyExerciseDto.CheckExerciseRequestDto request, String memberEmail) {
+    public List<MyExercise> checkMyExercise(BodyPart bodyPart, String memberEmail) {
         List<MyExercise> exercises = myExerciseRepository.findAll();
 
-                List<MyExercise> filteredList = exercises.stream()
-                        .filter(myExercise -> myExercise.getBody_part().equals(request.getBody_part())&&
-                                myExercise.getMember().getEmail().equals(memberEmail)).toList();
+        List<MyExercise> filteredList = exercises.stream()
+                .filter(myExercise -> myExercise.getBody_part().equals(bodyPart) &&
+                        myExercise.getMember().getEmail().equals(memberEmail)).toList();
 
-                if(filteredList.isEmpty()){
-                    throw new ExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND);
-                }
-
+        if (filteredList.isEmpty()) {
+            throw new ExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND);
+        }
         return filteredList;
-
     }
 }

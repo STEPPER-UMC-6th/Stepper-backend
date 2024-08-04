@@ -2,6 +2,8 @@ package com.example.stepperbackend.web.controller;
 
 
 import com.example.stepperbackend.apiPayload.ApiResponse;
+import com.example.stepperbackend.converter.ExerciseCardConverter;
+import com.example.stepperbackend.domain.ExerciseCard;
 import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.jwt.JWTUtil;
 import com.example.stepperbackend.service.exerciseCardService.ExerciseCardService;
@@ -10,8 +12,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -50,6 +54,15 @@ public class ExerciseCardController {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtUtil.getUsername(token);
         List<ExerciseCardDto.ExerciseCardStatusResponseDto> response = exerciseCardService.getExerciseStatusByMonth(month, email);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "오늘의 운동 진행상태 조회 API", description = "오늘의 운동 진행상태 조회")
+    @GetMapping("/today")
+    public ApiResponse<List<ExerciseCardDto.ToDayExerciseResponseDto>> getToDayExercise(@RequestParam("date") LocalDate date) {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        List<ExerciseCardDto.ToDayExerciseResponseDto> response = exerciseCardService.getTodayExercises(date, memberId);
         return ApiResponse.onSuccess(response);
     }
 

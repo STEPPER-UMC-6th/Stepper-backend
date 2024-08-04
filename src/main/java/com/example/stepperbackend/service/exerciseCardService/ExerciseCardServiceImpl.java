@@ -22,7 +22,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,5 +140,25 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
                 .bodyPart(bodyPart.name())
                 .weeks(weeks)
                 .build());
+    }
+
+
+
+    @Override
+    public List<ExerciseCardDto.ToDayExerciseResponseDto> getTodayExercises(LocalDate date, String memberEmail) {
+     Member member = memberRepository.findByEmail(memberEmail)
+             .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        List<ExerciseCard> exerciseCardList = exerciseCardRepository.findAllByMemberAndDate(member, date);
+        List<ExerciseStep> exerciseStepList = new ArrayList<>();
+
+        // 각 운동 카드에 대한 운동 단계 조회
+        for (ExerciseCard exerciseCard : exerciseCardList) {
+            List<ExerciseStep> stepsForCard = exerciseStepRepository.findAllByExerciseCard(exerciseCard);
+            exerciseStepList.addAll(stepsForCard); // 각 카드의 운동 단계를 리스트에 추가
+        }
+        if(exerciseCardList.isEmpty()) throw new ExerciseCardHandler(ErrorStatus.EXERCISE_CARD_NOT_FOUND);
+
+        return ExerciseCardConverter.toDayExerciseListDto(exerciseCardList, exerciseStepList);
+
     }
 }
