@@ -39,7 +39,13 @@ public enum ErrorStatus implements BaseErrorCode {
     RATE_DIARY_NOT_FOUND(HttpStatus.BAD_REQUEST, "RATE_DIARY4001", "평가 일지를 찾을 수 없습니다."),
 
     //exercise_step
-    EXERCISE_STEP_ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "EXERCISE_STEP4001", "스텝 아이디를 찾을 수 없습니다.");
+    EXERCISE_STEP_ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "EXERCISE_STEP4001", "스텝 아이디를 찾을 수 없습니다."),
+
+    // post
+    POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "POST4001", "게시글을 찾을 수 없습니다."),
+
+    //like
+    LIKE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "LIKE4001", "이미 좋아요를 눌렀습니다.");
 
 
 
