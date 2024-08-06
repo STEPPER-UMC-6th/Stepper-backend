@@ -34,4 +34,24 @@ public class PostConverter {
                 .updatedAt(post.getUpdatedAt())
                 .build();
     }
+
+    public static PostDto.PostViewDto toViewDto(Post post, int likes, int scraps, int commentsCount) {
+        return PostDto.PostViewDto.builder()
+                .id(post.getId())
+                .imageUrl(post.getImageUrl())
+                .title(post.getTitle())
+                .body(post.getBody())
+                .authorEmail(post.getMember().getEmail())
+                .categoryId(post.getCategoryId())
+                .subCategory(post.getSubCategory())
+                //
+                .likes(likes)
+                .scraps(scraps)
+                .commentsCount(commentsCount)
+                //.weeklyMissionTitle(post.getWeeklyMission() != null ? post.getWeeklyMission().getMissionTitle() : null)
+                .weeklyMissionTitle(post.getWeeklyMission() != null ? post.getWeeklyMission().getMissionTitle() : null)
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .build();
+    }
 }
