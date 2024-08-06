@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -35,6 +37,26 @@ public class PostController {
         PostDto.PostResponseDto response = postService.createPost(postRequestDto, email);
         return ApiResponse.onSuccess(response);
     }
+
+    @Operation(summary = "내가 작성한 글 조회 API", description = "내가 작성한 글 조회")
+    @GetMapping("/my_posts")
+    public ApiResponse<List<PostDto.PostViewDto>> getPostsList(HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        List<PostDto.PostViewDto> response = postService.getPostsList(email);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @Operation(summary = "게시글 상세 조회 API", description = "게시글 상세 조회")
+    @GetMapping("/{postId}")
+    public ApiResponse<PostDto.PostViewDto> getPost(@PathVariable Long postId, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        PostDto.PostViewDto response = postService.getPost(postId, email);
+        return ApiResponse.onSuccess(response);
+    }
+
 
     @Operation(summary = "좋아요 등록 API", description = "게시글 좋아요 등록")
     @PostMapping("/{postId}/like")
