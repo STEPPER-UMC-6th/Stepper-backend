@@ -57,6 +57,15 @@ public class PostController {
         return ApiResponse.onSuccess(response);
     }
 
+    @Operation(summary = "게시글 목록 조회 API", description = "게시글 목록 조회")
+    @GetMapping("/{categoryName}/posts")
+    public ApiResponse<List<PostDto.PostViewDto>> getAllPost(@PathVariable String categoryName, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        List<PostDto.PostViewDto> response = postService.getAllPost(categoryName, email);
+        return ApiResponse.onSuccess(response);
+    }
+
 
     @Operation(summary = "좋아요 등록 API", description = "게시글 좋아요 등록")
     @PostMapping("/{postId}/like")

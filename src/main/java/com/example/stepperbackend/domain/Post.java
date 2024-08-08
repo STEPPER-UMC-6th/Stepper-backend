@@ -1,6 +1,7 @@
 package com.example.stepperbackend.domain;
 
 import com.example.stepperbackend.domain.common.BaseEntity;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.domain.enums.SubCategory;
 import com.example.stepperbackend.domain.mapping.Scrap;
 import com.example.stepperbackend.domain.mapping.Likes;
@@ -28,8 +29,8 @@ public class Post extends BaseEntity {
     private String title;
     private String body;
 
-    private Long categoryId;
-
+    @Enumerated(EnumType.STRING)
+    private BodyPart bodyPart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -41,6 +42,7 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weekly_mission_id")
     private WeeklyMission weeklyMission;
+
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Likes> likesList = new ArrayList<>();

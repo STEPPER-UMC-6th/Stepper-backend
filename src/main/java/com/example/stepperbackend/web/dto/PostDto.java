@@ -13,7 +13,7 @@ public class PostDto {
         private String imageUrl;
         private String title;
         private String body;
-        private Long categoryId;
+        private String bodyPart;
         private SubCategory subCategory;
         private Long weeklyMissionId;
     }
@@ -26,7 +26,7 @@ public class PostDto {
         private String title;
         private String body;
         private String authorEmail;
-        private Long categoryId;
+        private String bodyPart;
         private SubCategory subCategory;
         private String weeklyMissionTitle;
         private LocalDateTime createdAt;
@@ -41,7 +41,7 @@ public class PostDto {
         private String title;
         private String body;
         private String authorEmail;
-        private Long categoryId;
+        private String bodyPart;
         private int likes;
         private int scraps;
         private int commentsCount;

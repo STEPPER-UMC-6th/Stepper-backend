@@ -12,6 +12,8 @@ public interface PostService {
 
     PostDto.PostViewDto getPost(Long postId, String email);
 
+    List<PostDto.PostViewDto> getAllPost(String category, String email);
+
     List<PostDto.PostViewDto> getCommentsList(String email);
 
 }
