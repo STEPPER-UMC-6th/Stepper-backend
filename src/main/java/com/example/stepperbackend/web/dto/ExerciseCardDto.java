@@ -14,10 +14,12 @@ import java.util.List;
 
 public class ExerciseCardDto {
 
+    @Builder
     @Getter
     public static class ExerciseCardRequestDto {
         private LocalDate date;
-        private String week;
+        //private String week;
+        private List<Week> weeks;
         private int hour;
         private int minute;
         private int second;
