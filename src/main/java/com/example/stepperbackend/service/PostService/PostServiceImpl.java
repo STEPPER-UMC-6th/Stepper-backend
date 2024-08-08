@@ -105,6 +105,14 @@ public class PostServiceImpl implements PostService {
                     return PostConverter.toViewDto(post, scraps, likes, comments);
                 })
                 .collect(Collectors.toList());
+
+        if (postList.isEmpty()) {
+            throw new PostHandler(ErrorStatus.MY_POST_LIST_NOT_FOUND);
+        }
+
+        return postList;
+    }
+
     @Override
     public List<PostDto.PostViewDto> getCommentsList(String email) {
         Member member = memberRepository.findByEmail(email)
@@ -124,13 +132,6 @@ public class PostServiceImpl implements PostService {
                 })
                 .distinct()
                 .toList();
-    }
-
-        if (postList.isEmpty()) {
-            throw new PostHandler(ErrorStatus.MY_POST_LIST_NOT_FOUND);
-        }
-
-        return postList;
     }
 }
 
