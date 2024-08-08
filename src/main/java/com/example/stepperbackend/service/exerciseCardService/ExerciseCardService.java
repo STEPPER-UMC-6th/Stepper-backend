@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface ExerciseCardService {
 
-    ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto dto, String email);
+    //ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto dto, String email);
+
+    List<ExerciseCardDto.ExerciseCardResponseDto> addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto dto, String email);
 
     ExerciseCardDto.ExerciseCardResponseDto getExerciseCardDetail(Long exerciseId);
 

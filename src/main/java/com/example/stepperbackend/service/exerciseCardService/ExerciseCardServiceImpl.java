@@ -42,35 +42,63 @@ public class ExerciseCardServiceImpl implements ExerciseCardService {
 
     final BadgeService badgeService;
 
+//    @Override
+//    public ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto request, String email) {
+//        Member member = memberRepository.findByEmail(email)
+//                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+//
+//        // 운동 카드 저장
+//        ExerciseCard exerciseCard = ExerciseCardConverter.toEntity(request, member);
+//        exerciseCardRepository.save(exerciseCard);
+//
+//        // 운동 카드 단계
+//        List<ExerciseStep> exerciseStepList = request.getStepList().stream()
+//                .map(exerciseStepRequestDto -> {
+//                    // 나만의 운동 찾기
+//                    MyExercise myExercise = myExerciseRepository.findById(exerciseStepRequestDto.getMyExerciseId())
+//                            .orElseThrow(() -> new MyExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND));
+//                    // exerciseStep 저장
+//                    ExerciseStep exerciseStep = ExerciseStepConverter.toEntity(exerciseStepRequestDto, exerciseCard, myExercise);
+//                    return exerciseStepRepository.save(exerciseStep);
+//                })
+//                .collect(Collectors.toList());
+//
+//        exerciseCard.setExerciseStepList(exerciseStepList);
+//
+//        // 첫 운동 카드 설정 완료
+//        if(exerciseCardRepository.getCountByMember(member) == 1){
+//            badgeService.putFirstBadge("첫 운동 설정 완료", member);
+//        }
+//
+//        return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
+//    }
+
     @Override
-    public ExerciseCardDto.ExerciseCardResponseDto addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto request, String email) {
+    public List<ExerciseCardDto.ExerciseCardResponseDto> addExerciseCard(ExerciseCardDto.ExerciseCardRequestDto dto, String email) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new RuntimeException("Member not found"));
 
-        // 운동 카드 저장
-        ExerciseCard exerciseCard = ExerciseCardConverter.toEntity(request, member);
-        exerciseCardRepository.save(exerciseCard);
+        List<ExerciseCard> createdCards = new ArrayList<>();
 
-        // 운동 카드 단계
-        List<ExerciseStep> exerciseStepList = request.getStepList().stream()
-                .map(exerciseStepRequestDto -> {
-                    // 나만의 운동 찾기
-                    MyExercise myExercise = myExerciseRepository.findById(exerciseStepRequestDto.getMyExerciseId())
-                            .orElseThrow(() -> new MyExerciseHandler(ErrorStatus.MY_EXERCISE_NOT_FOUND));
-                    // exerciseStep 저장
-                    ExerciseStep exerciseStep = ExerciseStepConverter.toEntity(exerciseStepRequestDto, exerciseCard, myExercise);
-                    return exerciseStepRepository.save(exerciseStep);
-                })
-                .collect(Collectors.toList());
+        for (Week week : dto.getWeeks()) {
+            ExerciseCardDto.ExerciseCardRequestDto cardDto = ExerciseCardDto.ExerciseCardRequestDto.builder()
+                    .date(dto.getDate())
+                    .weeks(List.of(week))
+                    .hour(dto.getHour())
+                    .minute(dto.getMinute())
+                    .second(dto.getSecond())
+                    .materials(dto.getMaterials())
+                    .bodyPart(dto.getBodyPart())
+                    .stepList(dto.getStepList())
+                    .build();
 
-        exerciseCard.setExerciseStepList(exerciseStepList);
-
-        // 첫 운동 카드 설정 완료
-        if(exerciseCardRepository.getCountByMember(member) == 1){
-            badgeService.putFirstBadge("첫 운동 설정 완료", member);
+            ExerciseCard card = ExerciseCardConverter.toEntity(cardDto, member);
+            createdCards.add(exerciseCardRepository.save(card));
         }
 
-        return ExerciseCardConverter.toDto(exerciseCard, exerciseStepList);
+        return createdCards.stream()
+                .map(card -> ExerciseCardConverter.toDto(card, new ArrayList<>()))
+                .collect(Collectors.toList());
     }
 
     @Override
