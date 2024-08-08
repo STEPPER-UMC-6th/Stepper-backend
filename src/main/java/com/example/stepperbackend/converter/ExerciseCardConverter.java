@@ -62,6 +62,7 @@ public class ExerciseCardConverter {
         return ExerciseCardDto.ExerciseCardStatusResponseDto.builder()
                 .date(exerciseCard.getDate())
                 .status(exerciseCard.isStatus())
+                .bodyPart(exerciseCard.getBodyPart())
                 .build();
     }
 

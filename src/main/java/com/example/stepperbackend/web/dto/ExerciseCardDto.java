@@ -50,6 +50,7 @@ public class ExerciseCardDto {
     public static class ExerciseCardStatusResponseDto {
         private LocalDate date;
         private boolean status;
+        private BodyPart bodyPart;
     }
 
     @Getter
