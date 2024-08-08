@@ -6,6 +6,7 @@ import com.example.stepperbackend.apiPayload.exception.handler.PostHandler;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.Post;
 import com.example.stepperbackend.domain.WeeklyMission;
+import com.example.stepperbackend.domain.enums.BodyPart;
 import com.example.stepperbackend.repository.*;
 import com.example.stepperbackend.service.badgeService.BadgeService;
 import com.example.stepperbackend.web.dto.PostDto;
@@ -88,6 +89,25 @@ public class PostServiceImpl implements PostService {
         return PostConverter.toViewDto(post,likes,scraps,commentsCount);
     }
 
+    @Override
+    public List<PostDto.PostViewDto> getAllPost(String categoryName, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
+        List<PostDto.PostViewDto> postList = postRepository.findByCategoryId(BodyPart.valueOf(categoryName)).stream()
+                .map(post -> {
+                    int likes = likeRepository.getCountByPost(post);
+                    int scraps = scrapRepository.getCountByPost(post);
+                    int comments = commentRepository.getCountByPost(post);
+                    return PostConverter.toViewDto(post, scraps, likes, comments);
+                })
+                .collect(Collectors.toList());
+
+        if (postList.isEmpty()) {
+            throw new PostHandler(ErrorStatus.MY_POST_LIST_NOT_FOUND);
+        }
+
+        return postList;
+    }
 }
 
