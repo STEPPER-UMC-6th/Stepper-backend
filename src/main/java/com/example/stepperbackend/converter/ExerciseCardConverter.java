@@ -18,7 +18,8 @@ public class ExerciseCardConverter {
     public static ExerciseCard toEntity(ExerciseCardDto.ExerciseCardRequestDto dto, Member member) {
         return ExerciseCard.builder()
                 .date(dto.getDate())
-                .week(Week.valueOf(dto.getWeek().toString()))
+                //.week(Week.valueOf(dto.getWeek().toString()))
+                .week(Week.valueOf(dto.getWeeks().get(0).name()))
                 .hour(dto.getHour())
                 .minute(dto.getMinute())
                 .second(dto.getSecond())
@@ -49,7 +50,8 @@ public class ExerciseCardConverter {
 
     public static ExerciseCard updateEntity(ExerciseCard existingExerciseCard, ExerciseCardDto.ExerciseCardRequestDto dto) {
         existingExerciseCard.setDate(dto.getDate());
-        existingExerciseCard.setWeek(Week.valueOf(dto.getWeek().toString()));
+        //existingExerciseCard.setWeek(Week.valueOf(dto.getWeek().toString()));
+        existingExerciseCard.setWeek(Week.valueOf(dto.getWeeks().get(0).name()));
         existingExerciseCard.setHour(dto.getHour());
         existingExerciseCard.setMinute(dto.getMinute());
         existingExerciseCard.setSecond(dto.getSecond());
