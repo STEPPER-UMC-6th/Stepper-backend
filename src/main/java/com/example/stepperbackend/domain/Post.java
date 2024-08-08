@@ -48,7 +48,6 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Scrap> scrapList = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> CommentList = new ArrayList<>();
 }

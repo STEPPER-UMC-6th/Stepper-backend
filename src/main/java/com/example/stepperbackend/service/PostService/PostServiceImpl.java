@@ -1,8 +1,11 @@
 package com.example.stepperbackend.service.PostService;
 
 import com.example.stepperbackend.apiPayload.code.status.ErrorStatus;
+import com.example.stepperbackend.apiPayload.exception.handler.CommentHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.PostHandler;
+import com.example.stepperbackend.apiPayload.exception.handler.RateDiaryHandler;
+import com.example.stepperbackend.domain.Comment;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.Post;
 import com.example.stepperbackend.domain.WeeklyMission;
@@ -88,6 +91,26 @@ public class PostServiceImpl implements PostService {
         return PostConverter.toViewDto(post,likes,scraps,commentsCount);
     }
 
+    @Override
+    public List<PostDto.PostViewDto> getCommentsList(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        List<Comment> comments = commentRepository.findByMember(member);
+
+        if(comments.isEmpty()) {throw new CommentHandler(ErrorStatus.MY_COMMENTS_NOT_FOUND);}
+
+        return comments.stream()
+                .map(comment -> {
+                    Post post = comment.getPost();
+                    int likes = likeRepository.getCountByPost(post);
+                    int scraps = scrapRepository.getCountByPost(post);
+                    int commentsCount= commentRepository.getCountByPost(post);
+                    return PostConverter.toViewDto(post,likes,scraps,commentsCount);
+                })
+                .distinct()
+                .toList();
+    }
 
 }
 

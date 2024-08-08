@@ -1,6 +1,7 @@
 package com.example.stepperbackend.repository;
 
 import com.example.stepperbackend.domain.Comment;
+import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("SELECT count(e) FROM Comment e WHERE e.post = :post")
     int getCountByPost(Post post);
+
+    List<Comment> findByMember(Member member);
+
+
 }

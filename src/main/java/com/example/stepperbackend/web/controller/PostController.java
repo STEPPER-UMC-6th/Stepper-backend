@@ -93,4 +93,13 @@ public class PostController {
         scrapService.deleteScrap(email, postId);
         return ApiResponse.onSuccess("스크랩 취소 성공");
     }
+
+    @Operation(summary = "내가 작성한 댓글의 게시글 조회 API", description = "내가 작성한 댓글의 게시글 조회")
+    @GetMapping("/my_comments")
+    public ApiResponse<List<PostDto.PostViewDto>> getCommentsList(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtUtil.getUsername(token);
+        List<PostDto.PostViewDto> response = postService.getCommentsList(email);
+        return ApiResponse.onSuccess(response);
+    }
 }
