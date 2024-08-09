@@ -5,6 +5,7 @@ import com.example.stepperbackend.apiPayload.exception.handler.CommentHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.MemberHandler;
 import com.example.stepperbackend.apiPayload.exception.handler.PostHandler;
 import com.example.stepperbackend.converter.CommentConverter;
+import com.example.stepperbackend.converter.PostConverter;
 import com.example.stepperbackend.domain.Comment;
 import com.example.stepperbackend.domain.Member;
 import com.example.stepperbackend.domain.Post;
@@ -12,6 +13,7 @@ import com.example.stepperbackend.repository.CommentRepository;
 import com.example.stepperbackend.repository.MemberRepository;
 import com.example.stepperbackend.repository.PostRepository;
 import com.example.stepperbackend.web.dto.CommentDto;
+import com.example.stepperbackend.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -94,6 +98,18 @@ public class CommentServiceImpl implements CommentService {
             anonymousCountMap.put(postId, anonymousCount);
             return "익명" + anonymousCount;
         }
+    }
+
+    @Override
+    public List<CommentDto.CommentResponseDto> getComment(Long postId) {
+
+        List<Comment> commentList = commentRepository.findByPostId(postId);
+
+        if (commentList.isEmpty()) {
+            throw new CommentHandler(ErrorStatus.COMMENTS_NOT_FOUND);
+        }
+
+        return commentList.stream().map(CommentConverter::toDto).collect(Collectors.toList());
     }
 }
 
