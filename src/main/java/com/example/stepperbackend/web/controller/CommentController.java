@@ -27,4 +27,13 @@ public class CommentController {
         CommentDto.CommentResponseDto response = commentService.writeComment(request, memberId);
         return ApiResponse.onSuccess(response);
     }
+
+    @Operation(summary = "대댓글 작성 API", description = "대댓글 작성")
+    @PostMapping("/reply")
+    public ApiResponse<CommentDto.CommentResponseDto> reply(@RequestBody @Valid CommentDto.ReplyRequestDto request) {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        CommentDto.CommentResponseDto response = commentService.writeReply(request, memberId);
+        return ApiResponse.onSuccess(response);
+    }
 }

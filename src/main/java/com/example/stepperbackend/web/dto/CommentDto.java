@@ -29,4 +29,13 @@ public class CommentDto {
         private String content;
         private LocalDateTime dateTime;
     }
+
+    @Getter
+    public static class ReplyRequestDto {
+        private Long postId;
+        private Long parentCommentId;
+        private String content;
+        private boolean anonymous;
+    }
+
 }
