@@ -43,18 +43,12 @@ public class CommentServiceImpl implements CommentService {
         Post post = postRepository.findById(request.getPostId())
                 .orElseThrow(() -> new PostHandler(ErrorStatus.POST_NOT_FOUND));
 
-        List<Comment> optionalComment = commentRepository.findByPost_IdAndMember_Id(post.getId(), member.getId());
+        List<Comment> commentList = commentRepository.findByPost_IdAndMember_Id(post.getId(), member.getId());
 
         String memberName;
 
         if (request.isAnonymous()) {
-            if (!optionalComment.isEmpty()) {
-                memberName = optionalComment.get(0).getAnonymousName();
-            } else {
-                int anonymousCount = anonymousCountMap.getOrDefault(post.getId(), 0) + 1;
-                memberName = "익명" + anonymousCount;
-                anonymousCountMap.put(post.getId(), anonymousCount);
-            }
+            memberName = getAnonymousName(commentList, post.getId());
         } else {
             memberName = member.getName();
         }
@@ -63,6 +57,47 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
 
         return CommentConverter.toDto(comment);
+    }
+
+
+
+    @Override
+    public CommentDto.CommentResponseDto writeReply(CommentDto.ReplyRequestDto request, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        Post post = postRepository.findById(request.getPostId())
+                .orElseThrow(() -> new PostHandler(ErrorStatus.POST_NOT_FOUND));
+
+        Comment parentComment = commentRepository.findById(request.getParentCommentId())
+                .orElseThrow(() -> new CommentHandler(ErrorStatus.PARENT_COMMENT_NOT_FOUND));
+
+        List<Comment> commentList = commentRepository.findByPost_IdAndMember_Id(post.getId(), member.getId());
+
+        String memberName;
+
+        if (request.isAnonymous()) {
+            memberName = getAnonymousName(commentList, post.getId());
+        } else {
+            memberName = member.getName();
+        }
+
+        Comment reply = CommentConverter.toReplyEntity(request, member, post, memberName, parentComment);
+        commentRepository.save(reply);
+
+        return CommentConverter.toDto(reply);
+    }
+
+
+    // 익명 이름 생성 메서드
+    private String getAnonymousName(List<Comment> commentList, Long postId) {
+        if (!commentList.isEmpty()) {
+            return commentList.get(0).getAnonymousName();
+        } else {
+            int anonymousCount = anonymousCountMap.getOrDefault(postId, 0) + 1;
+            anonymousCountMap.put(postId, anonymousCount);
+            return "익명" + anonymousCount;
+        }
     }
 
     @Override

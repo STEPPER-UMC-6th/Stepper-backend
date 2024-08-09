@@ -53,7 +53,8 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //comment
     MY_COMMENTS_NOT_FOUND(HttpStatus.BAD_REQUEST, "MY_COMMENTS4001", "내가 작성한 댓글이 없습니다."),
-    COMMENTS_NOT_FOUND(HttpStatus.BAD_REQUEST, "COMMENT4001", "댓글이 없습니다.");
+    COMMENTS_NOT_FOUND(HttpStatus.BAD_REQUEST, "COMMENT4001", "댓글이 없습니다."),
+    PARENT_COMMENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "COMMENT4002", "부모 댓글이 없습니다.");
 
 
     private final HttpStatus httpStatus;

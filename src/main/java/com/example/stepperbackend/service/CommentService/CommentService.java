@@ -9,4 +9,10 @@ public interface CommentService {
     CommentDto.CommentResponseDto writeComment(CommentDto.CommentRequestDto request, String Email);
 
     List<CommentDto.CommentResponseDto> getComment(Long postId);
+
+    CommentDto.CommentResponseDto writeReply(CommentDto.ReplyRequestDto request, String email);
+
 }
+
+
+

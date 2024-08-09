@@ -30,4 +30,16 @@ public class CommentConverter {
                 .dateTime(comment.getCreatedAt())
                 .build();
     }
+
+    public static Comment toReplyEntity(CommentDto.ReplyRequestDto dto, Member member, Post post, String memberName, Comment parentComment) {
+        return Comment.builder()
+                .content(dto.getContent())
+                .createdAt(LocalDateTime.now())
+                .member(member)
+                .post(post)
+                .anonymous(dto.isAnonymous())
+                .anonymousName(memberName)
+                .parentComment(parentComment)
+                .build();
+    }
 }
