@@ -1,4 +1,4 @@
-<img width="963" alt="Untitled" src="https://github.com/user-attachments/assets/f8bb2a77-647d-4b0d-b7c3-4f87e99b7bdb" /><img src= "https://github.com/user-attachments/assets/f8b40e19-aa80-4f8c-ad9f-06fb2782f642">
+<img src= "https://github.com/user-attachments/assets/f8b40e19-aa80-4f8c-ad9f-06fb2782f642">
 <h3 align="center">나만의 재활 루틴으로 한 단계(STEP)씩 회복을 찾다 STEPPER</h3>
 <p align="center">맞춤화된 재활 운동을 형성하고 통증 기록을 가시적으로 확인할 수 있는 서비스</p>
 
